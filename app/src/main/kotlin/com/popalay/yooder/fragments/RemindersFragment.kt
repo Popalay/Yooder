@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.github.clans.fab.FloatingActionButton
 import com.popalay.yooder.R
 import com.popalay.yooder.widgets.PagerAdapter
 import kotlinx.android.synthetic.fragment_reminders.*

@@ -1,10 +1,11 @@
 package com.popalay.yooder.activities
 
+import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.NavigationView
 import android.support.v4.app.Fragment
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import com.parse.ParseUser
@@ -15,19 +16,20 @@ import kotlinx.android.synthetic.activity_main.navigationView
 import kotlinx.android.synthetic.activity_main.toolbar
 import kotlinx.android.synthetic.header.email
 import kotlinx.android.synthetic.header.username
-import org.jetbrains.anko.*
 
-public class MainActivity : AppCompatActivity(), AnkoLogger {
+public class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         // Get current user
         if (ParseUser.getCurrentUser() == null) navigateToAuth()
-        setSupportActionBar(toolbar)
-        initNavigateDrawer()
-        setFragment(RemindersFragment(), RemindersFragment.TAG)
-        supportActionBar.subtitle = "Reminders"
+        else {
+            setSupportActionBar(toolbar)
+            initNavigateDrawer()
+            setFragment(RemindersFragment(), RemindersFragment.TAG)
+            supportActionBar.subtitle = "Reminders"
+        }
     }
 
     private fun initNavigateDrawer() {
@@ -66,8 +68,8 @@ public class MainActivity : AppCompatActivity(), AnkoLogger {
     }
 
     private fun setUserInfo() {
-        username.text = ParseUser.getCurrentUser()?.getString("FullName")
-        email.text = ParseUser.getCurrentUser()?.email
+        username.text = ParseUser.getCurrentUser()?.getString("FullName") ?: ""
+        email.text = ParseUser.getCurrentUser()?.email ?: ""
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -86,15 +88,19 @@ public class MainActivity : AppCompatActivity(), AnkoLogger {
 
     private fun setFragment(fragment: Fragment, tag: String) {
         if (supportFragmentManager.findFragmentByTag(tag) == null) {
-            info("setFragment $tag")
+            Log.i("Main", "setFragment $tag")
             supportFragmentManager.beginTransaction().replace(R.id.container, fragment, tag).commit()
         }
     }
 
     private fun navigateToAuth() {
         // Launch the login activity
-        info("navigateToAuth")
-        startActivity(intentFor<AuthActivity>().newTask().clearTop())
+        Log.i("Main", "navigateToAuth")
+        var intent = Intent(this, AuthActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        startActivity(intent);
+        //startActivity(intentFor<AuthActivity>().newTask().clearTop())
         finish()
     }
 

@@ -32,7 +32,6 @@
         android:paddingBottom="10dp"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        app:menu_backgroundColor="#ccffffff"
         app:menu_colorNormal="?attr/colorAccent"
         app:menu_labels_ellipsize="end"
         app:menu_labels_position="left"

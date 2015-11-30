@@ -12,10 +12,7 @@ import com.popalay.yooder.eventbus.LoginButtonEvent
 import com.popalay.yooder.eventbus.SignupButtonEvent
 import com.popalay.yooder.extensions.hideKeyboard
 import com.popalay.yooder.extensions.snackbar
-import kotlinx.android.synthetic.fragment_login.btnLogin
-import kotlinx.android.synthetic.fragment_login.email
-import kotlinx.android.synthetic.fragment_login.linkSignup
-import kotlinx.android.synthetic.fragment_login.password
+import kotlinx.android.synthetic.fragment_login.*
 
 public class LoginFragment : Fragment() {
 
@@ -45,6 +42,7 @@ public class LoginFragment : Fragment() {
     {
         hideKeyboard();
         var isEmpty = false
+
         if (email.editText.text.length == 0) {
             email.error = "E-mail cannot be blank"
             isEmpty = true

@@ -8,14 +8,11 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.TextView
 import com.parse.ParseUser
 import com.popalay.yooder.R
 import com.popalay.yooder.fragments.RemindersFragment
-import kotlinx.android.synthetic.activity_main.drawerLayout
-import kotlinx.android.synthetic.activity_main.navigationView
-import kotlinx.android.synthetic.activity_main.toolbar
-import kotlinx.android.synthetic.header.email
-import kotlinx.android.synthetic.header.username
+import kotlinx.android.synthetic.activity_main.*
 
 public class MainActivity : AppCompatActivity() {
 
@@ -58,7 +55,8 @@ public class MainActivity : AppCompatActivity() {
             true
         }
         // Initializing Drawer Layout and ActionBarToggle
-        var actionBarDrawerToggle: ActionBarDrawerToggle = ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.widgets_drawer_open, R.string.widgets_drawer_close)
+        var actionBarDrawerToggle: ActionBarDrawerToggle = ActionBarDrawerToggle(this, drawerLayout, toolbar,
+                R.string.widgets_drawer_open, R.string.widgets_drawer_close)
         //Setting the actionbarToggle to drawer layout
         drawerLayout.setDrawerListener(actionBarDrawerToggle);
 
@@ -68,13 +66,15 @@ public class MainActivity : AppCompatActivity() {
     }
 
     private fun setUserInfo() {
+        val username = navigationView.getHeaderView(0).findViewById(R.id.username) as TextView
+        val email = navigationView.getHeaderView(0).findViewById(R.id.email) as TextView
         username.text = ParseUser.getCurrentUser()?.getString("FullName") ?: ""
         email.text = ParseUser.getCurrentUser()?.email ?: ""
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.menu_main, menu);
+        menuInflater.inflate(R.menu.main, menu);
         return true;
     }
 

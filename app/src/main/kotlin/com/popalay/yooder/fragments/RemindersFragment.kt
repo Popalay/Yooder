@@ -1,12 +1,13 @@
 package com.popalay.yooder.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.github.clans.fab.FloatingActionButton
 import com.popalay.yooder.R
+import com.popalay.yooder.activities.AddDebtDialog
 import com.popalay.yooder.widgets.PagerAdapter
 import kotlinx.android.synthetic.fragment_reminders.*
 
@@ -16,7 +17,6 @@ public class RemindersFragment : Fragment() {
         val TAG = "RemindersFragment"
     }
 
-
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater?.inflate(R.layout.fragment_reminders, container, false)
     }
@@ -25,7 +25,10 @@ public class RemindersFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         addDebtFab.setOnClickListener {
             floatMenu.close(true)
-            //AddDebtFragmentDialog.instance().show(activity.supportFragmentManager, AddDebtFragmentDialog.TAG)
+            var intent = Intent(activity, AddDebtDialog::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            startActivity(intent);
         }
         addOtherFab.setOnClickListener {
             floatMenu.close(true)

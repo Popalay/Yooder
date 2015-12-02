@@ -3,7 +3,6 @@ package com.popalay.yooder.activities
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import com.popalay.yooder.R
 import com.popalay.yooder.eventbus.BusProvider
@@ -13,7 +12,7 @@ import com.popalay.yooder.fragments.LoginFragment
 import com.popalay.yooder.fragments.SignupFragment
 import com.squareup.otto.Subscribe
 
-public class AuthActivity : AppCompatActivity(){
+public class AuthActivity : BaseActivity(){
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.ActionBarDrawerToggle
-import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
@@ -14,7 +13,7 @@ import com.popalay.yooder.R
 import com.popalay.yooder.fragments.RemindersFragment
 import kotlinx.android.synthetic.activity_main.*
 
-public class MainActivity : AppCompatActivity() {
+public class MainActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

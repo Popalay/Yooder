@@ -1,20 +1,24 @@
 package com.popalay.yooder.activities
 
+import android.os.Build
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import com.popalay.yooder.R
 import kotlinx.android.synthetic.dialog_add_debt.*
 
-class AddDebtDialog : AppCompatActivity() {
+class AddDebtDialog : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.dialog_add_debt)
         setSupportActionBar(toolbar)
         supportActionBar.title = "New Debt"
-        toolbar.navigationIcon = resources.getDrawable(R.drawable.ic_arrow_back);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            toolbar.navigationIcon = resources.getDrawable(R.drawable.ic_arrow_back, theme);
+        } else {
+            toolbar.navigationIcon = resources.getDrawable(R.drawable.ic_arrow_back);
+        }
         toolbar.setNavigationOnClickListener {
             finish()
         }
@@ -44,5 +48,4 @@ class AddDebtDialog : AppCompatActivity() {
         //save model
         finish()
     }
-
 }

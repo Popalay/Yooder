@@ -7,13 +7,18 @@ import android.support.v7.app.ActionBarDrawerToggle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.TextView
+import com.amulyakhare.textdrawable.TextDrawable
+import com.amulyakhare.textdrawable.util.ColorGenerator
 import com.parse.ParseUser
 import com.popalay.yooder.R
 import com.popalay.yooder.fragments.RemindersFragment
+import com.popalay.yooder.managers.DataManager
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.header.view.*
 
 public class MainActivity : BaseActivity() {
+
+    val LOG_TAG = MainActivity::class.java.simpleName
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,10 +70,17 @@ public class MainActivity : BaseActivity() {
     }
 
     private fun setUserInfo() {
-        val username = navigationView.getHeaderView(0).findViewById(R.id.username) as TextView
-        val email = navigationView.getHeaderView(0).findViewById(R.id.email) as TextView
-        username.text = ParseUser.getCurrentUser()?.getString("FullName") ?: ""
-        email.text = ParseUser.getCurrentUser()?.email ?: ""
+        var username = DataManager().getUser().getString("FullName") ?: ""
+        navigationView.getHeaderView(0).username.text = username
+        navigationView.getHeaderView(0).email.text = DataManager().getUser().email ?: ""
+
+        var generator = ColorGenerator.MATERIAL
+        // generate random color
+        var color = generator.getColor(username)
+
+        // reuse the builder specs to create multiple drawables
+        var ic = TextDrawable.builder().buildRound(username[0].toString(), color)
+        navigationView.getHeaderView(0).icon.setImageDrawable(ic)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -78,23 +90,19 @@ public class MainActivity : BaseActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        var id = item.itemId;
-        if (id == R.id.action_settings) {
-            return true;
-        }
         return super.onOptionsItemSelected(item);
     }
 
     private fun setFragment(fragment: Fragment, tag: String) {
         if (supportFragmentManager.findFragmentByTag(tag) == null) {
-            Log.i("Main", "setFragment $tag")
+            Log.i(LOG_TAG, "setFragment $tag")
             supportFragmentManager.beginTransaction().replace(R.id.container, fragment, tag).commit()
         }
     }
 
     private fun navigateToAuth() {
         // Launch the login activity
-        Log.i("Main", "navigateToAuth")
+        Log.i(LOG_TAG, "navigateToAuth")
         var intent = Intent(this, AuthActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)

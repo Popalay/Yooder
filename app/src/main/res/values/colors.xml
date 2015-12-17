@@ -16,4 +16,7 @@
     <color name="iron">#CCCCCC</color>
     <color name="white">#FFFFFF</color>
 
+    <color name="accent_dark">#7b3b96</color>
+    <color name="accent_light">#ba5ae2</color>
+
 </resources>

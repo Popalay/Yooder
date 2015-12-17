@@ -12,12 +12,13 @@ import com.popalay.yooder.eventbus.LoginButtonEvent
 import com.popalay.yooder.eventbus.SignupButtonEvent
 import com.popalay.yooder.extensions.hideKeyboard
 import com.popalay.yooder.extensions.snackbar
+import com.popalay.yooder.managers.DataManager
 import kotlinx.android.synthetic.main.fragment_login.*
 
 public class LoginFragment : Fragment() {
 
     companion object {
-        val TAG = "LoginFragment"
+        val TAG = LoginFragment::class.java.simpleName
 
         fun create(email: String): LoginFragment {
             var loginFragment = LoginFragment()
@@ -65,16 +66,17 @@ public class LoginFragment : Fragment() {
     }
 
     private fun login(userName: String, password: String) {
-        ParseUser.logInInBackground(userName, password, { user, e ->
-            if (user != null) {
-                // Hooray! The user is logged in.
-                BusProvider.instance.post(LoginButtonEvent(true))
-                snackbar("Welcome ${user.getString("FullName")}!")
-            } else {
-                // Login failed!
-                snackbar(e.message.toString())
-            }
-        })
+        DataManager().loginUser(userName, password).subscribe(
+                {
+                    user ->
+                    BusProvider.instance.post(LoginButtonEvent(true))
+                    snackbar("Welcome ${user.getString("FullName")}!")
+                },
+                {
+                    e ->
+                    snackbar(e.message.toString())
+                }
+        )
     }
 }
 

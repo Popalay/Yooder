@@ -9,7 +9,7 @@ import com.popalay.yooder.eventbus.BusProvider
 import com.popalay.yooder.eventbus.LoginButtonEvent
 import com.popalay.yooder.eventbus.SignupButtonEvent
 import com.popalay.yooder.fragments.LoginFragment
-import com.popalay.yooder.fragments.SignupFragment
+import com.popalay.yooder.fragments.SignUpFragment
 import com.squareup.otto.Subscribe
 
 public class AuthActivity : BaseActivity(){
@@ -45,7 +45,7 @@ public class AuthActivity : BaseActivity(){
     @Subscribe
     public fun onSignupButton(event: SignupButtonEvent) {
         when (event.email) {
-            "" -> setFragment(SignupFragment(), SignupFragment.TAG)
+            "" -> setFragment(SignUpFragment(), SignUpFragment.TAG)
             else -> setFragment(LoginFragment.create(event.email), LoginFragment.TAG)
         }
     }

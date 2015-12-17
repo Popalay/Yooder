@@ -1,4 +1,4 @@
-package com.popalay.yooder.model
+package com.popalay.yooder.models
 
 import com.parse.ParseClassName
 import com.parse.ParseObject

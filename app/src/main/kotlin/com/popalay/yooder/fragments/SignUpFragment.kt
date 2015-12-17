@@ -6,18 +6,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.parse.ParseUser
+import com.parse.SignUpCallback
 import com.popalay.yooder.R
 import com.popalay.yooder.eventbus.BusProvider
 import com.popalay.yooder.eventbus.LoginButtonEvent
 import com.popalay.yooder.eventbus.SignupButtonEvent
 import com.popalay.yooder.extensions.hideKeyboard
 import com.popalay.yooder.extensions.snackbar
+import com.popalay.yooder.managers.DataManager
 import kotlinx.android.synthetic.main.fragment_signup.*
 
-public class SignupFragment : Fragment() {
+public class SignUpFragment : Fragment() {
 
     companion object {
-        val TAG = "SignupFragment"
+        val TAG = SignUpFragment::class.java.simpleName
     }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -25,11 +27,11 @@ public class SignupFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
-        btnSignup.setOnClickListener(btnSignupClick)
+        btnSignup.setOnClickListener(btnSignUpClick)
         linkLogin.setOnClickListener { BusProvider.instance.post(LoginButtonEvent(false)) }
     }
 
-    private var btnSignupClick = View.OnClickListener()
+    private var btnSignUpClick = View.OnClickListener()
     {
         hideKeyboard();
         var isEmpty = false
@@ -58,20 +60,20 @@ public class SignupFragment : Fragment() {
             newUser.email = emailStr
             newUser.setPassword(passwordStr)
             newUser.put("FullName", fullNameStr)
-            signup(newUser)
+            signUp(newUser)
         }
     }
 
-    private fun signup(user: ParseUser) {
-        user.signUpInBackground { e ->
+    private fun signUp(user: ParseUser) {
+        DataManager().signUpUser(user, SignUpCallback { e ->
             if (e == null) {
-                // Signup successful!
+                // SignUp successful!
                 BusProvider.instance.post(SignupButtonEvent(user.email))
                 snackbar("Registration successful!")
             } else {
                 // Fail!
                 snackbar(e.message.toString())
             }
-        }
+        })
     }
 }

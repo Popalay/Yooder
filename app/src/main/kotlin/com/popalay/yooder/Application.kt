@@ -3,7 +3,7 @@ package com.popalay.yooder
 import android.app.Application
 import com.parse.Parse
 import com.parse.ParseObject
-import com.popalay.yooder.model.Debt
+import com.popalay.yooder.models.Debt
 
 public class Application : Application() {
 

@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import com.popalay.yooder.R
 import com.popalay.yooder.activities.AddDebtDialog
 import com.popalay.yooder.widgets.PagerAdapter
-import kotlinx.android.synthetic.fragment_reminders.*
+import kotlinx.android.synthetic.main.fragment_reminders.*
 
 public class RemindersFragment : Fragment() {
 

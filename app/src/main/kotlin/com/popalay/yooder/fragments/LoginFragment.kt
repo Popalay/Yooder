@@ -12,7 +12,7 @@ import com.popalay.yooder.eventbus.LoginButtonEvent
 import com.popalay.yooder.eventbus.SignupButtonEvent
 import com.popalay.yooder.extensions.hideKeyboard
 import com.popalay.yooder.extensions.snackbar
-import kotlinx.android.synthetic.fragment_login.*
+import kotlinx.android.synthetic.main.fragment_login.*
 
 public class LoginFragment : Fragment() {
 

@@ -11,7 +11,7 @@ import android.widget.TextView
 import com.parse.ParseUser
 import com.popalay.yooder.R
 import com.popalay.yooder.fragments.RemindersFragment
-import kotlinx.android.synthetic.activity_main.*
+import kotlinx.android.synthetic.main.activity_main.*
 
 public class MainActivity : BaseActivity() {
 

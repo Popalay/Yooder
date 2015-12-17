@@ -1,11 +1,11 @@
 package com.popalay.yooder.activities
 
-import android.os.Build
 import android.os.Bundle
+import android.support.v4.app.NavUtils
 import android.view.Menu
 import android.view.MenuItem
 import com.popalay.yooder.R
-import kotlinx.android.synthetic.dialog_add_debt.*
+import kotlinx.android.synthetic.main.dialog_add_debt.*
 
 class AddDebtDialog : BaseActivity() {
 
@@ -14,14 +14,7 @@ class AddDebtDialog : BaseActivity() {
         setContentView(R.layout.dialog_add_debt)
         setSupportActionBar(toolbar)
         supportActionBar.title = "New Debt"
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            toolbar.navigationIcon = resources.getDrawable(R.drawable.ic_arrow_back, theme);
-        } else {
-            toolbar.navigationIcon = resources.getDrawable(R.drawable.ic_arrow_back);
-        }
-        toolbar.setNavigationOnClickListener {
-            finish()
-        }
+        supportActionBar.setDisplayHomeAsUpEnabled(true)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -33,7 +26,7 @@ class AddDebtDialog : BaseActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> {
-                finish()
+                NavUtils.navigateUpFromSameTask(this);
                 return true
             }
             R.id.save -> {

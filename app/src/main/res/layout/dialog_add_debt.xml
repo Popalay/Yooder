@@ -25,20 +25,40 @@
         android:orientation="vertical"
         android:padding="@dimen/abc_dialog_padding_material">
 
+        <CheckBox
+            android:id="@+id/meDebtor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="14dp"
+            android:checked="true"
+            android:text="Me" />
+
         <android.support.design.widget.TextInputLayout
             android:id="@+id/debtor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:layout_marginTop="8dp">
+            android:layout_toStartOf="@id/meDebtor">
 
-            <EditText
+            <AutoCompleteTextView
+                android:id="@+id/actvDebtor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:enabled="false"
                 android:hint="Debtor"
                 android:inputType="textCapWords" />
 
         </android.support.design.widget.TextInputLayout>
+
+        <CheckBox
+            android:id="@+id/meLent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@id/meDebtor"
+            android:layout_marginTop="36dp"
+            android:text="Me" />
 
         <android.support.design.widget.TextInputLayout
             android:id="@+id/lent"
@@ -46,9 +66,11 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/debtor"
             android:layout_marginBottom="8dp"
-            android:layout_marginTop="8dp">
+            android:layout_marginTop="8dp"
+            android:layout_toStartOf="@id/meLent">
 
-            <EditText
+            <AutoCompleteTextView
+                android:id="@+id/actvLent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Lent"
@@ -73,30 +95,30 @@
 
         </android.support.design.widget.TextInputLayout>
 
-        <fr.ganfra.materialspinner.MaterialSpinner
+        <org.angmarch.views.NiceSpinner
             android:id="@+id/currency"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/lent"
-            android:layout_marginTop="2dp"
+            android:layout_marginTop="14dp"
             android:layout_toEndOf="@id/money"
-            app:ms_hint="Currency" />
+            android:gravity="end" />
 
         <Button
-            android:id="@+id/btn_setDate"
-            style="@style/Base.Widget.AppCompat.Button.Borderless"
+            android:id="@+id/btnSetDate"
+            style="@style/Base.Widget.AppCompat.Button.Borderless.Colored"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/money"
             android:text="Set date" />
 
         <Button
-            android:id="@+id/btn_setTime"
-            style="@style/Base.Widget.AppCompat.Button.Borderless"
+            android:id="@+id/btnSetTime"
+            style="@style/Base.Widget.AppCompat.Button.Borderless.Colored"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/money"
-            android:layout_toEndOf="@id/btn_setDate"
+            android:layout_toEndOf="@id/btnSetDate"
             android:text="Set time" />
 
     </RelativeLayout>

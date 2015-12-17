@@ -11,7 +11,7 @@ public class Application : Application() {
         super.onCreate()
 
         Parse.enableLocalDatastore(this)
-        ParseObject.registerSubclass(Debt::class.java)
         Parse.initialize(this, "xIjz6RqkS2yZjhhRWKT2jo0zW0tnVXYiDuDPmHBX", "roIv6s0Tf1dTwyTaHvJd5RMsqBh9xTzLjgA7DiJH")
+        ParseObject.registerSubclass(Debt::class.java)
     }
 }

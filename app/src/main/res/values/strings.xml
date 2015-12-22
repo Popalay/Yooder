@@ -25,4 +25,9 @@
         <item>£ GBP</item>
     </string-array>
 
+    <string-array name="role_array">
+        <item>Debtor</item>
+        <item>Lent</item>
+    </string-array>
+
 </resources>

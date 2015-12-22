@@ -6,6 +6,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.ArrayAdapter
 import com.jakewharton.rxbinding.widget.RxTextView
+import com.parse.ParseUser
 import com.popalay.yooder.R
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
 import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout
@@ -17,7 +18,7 @@ import java.util.concurrent.TimeUnit
 
 class AddDebtDialog : BaseActivity(), DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
 
-    val LOG_TAG = AddDebtDialog::class.java.simpleName
+    val TAG = AddDebtDialog::class.java.simpleName
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,7 +30,6 @@ class AddDebtDialog : BaseActivity(), DatePickerDialog.OnDateSetListener, TimePi
         setSupportActionBar(toolbar)
         supportActionBar.title = "New Debt"
         supportActionBar.setDisplayHomeAsUpEnabled(true)
-        currency.attachDataSource(resources.getStringArray(R.array.currency_array).toList())
         btnSetDate.setOnClickListener {
             var now = Calendar.getInstance();
             DatePickerDialog.newInstance(
@@ -49,37 +49,21 @@ class AddDebtDialog : BaseActivity(), DatePickerDialog.OnDateSetListener, TimePi
             ).show(fragmentManager, "Timepickerdialog");
         }
 
-        var data = listOf("sdsd", "dd", "as", "sdd")
-
-        lent.requestFocus()
-        RxTextView.afterTextChangeEvents(actvDebtor)
-                .filter { actvDebtor.text.count() > 0 }
+        party.requestFocus()
+        var adapter = ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
+        actvParty.setAdapter(adapter)
+        RxTextView.afterTextChangeEvents(actvParty)
+               // .filter { actvParty.text.count() > 0 }
                 .debounce(100, TimeUnit.MILLISECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe {
-                    var adapter = ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,
-                            data.filter { str -> str.contains(actvDebtor.text.toString().toLowerCase()) });
-                    actvDebtor.setAdapter(adapter)
-                    actvDebtor.showDropDown()
+                    ParseUser.getQuery().whereContains("FullName", actvParty.text.toString())
+                            .findInBackground { users, e ->
+                                adapter.clear()
+                                adapter.addAll(users.map { user -> user.getString("FullName")  + "\n" + user.username})
+                                actvParty.showDropDown()
+                            }
                 }
-        RxTextView.afterTextChangeEvents(actvLent)
-                .filter { actvLent.text.count() > 0 }
-                .debounce(100, TimeUnit.MILLISECONDS)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe {
-                    var adapter = ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,
-                            data.filter { str -> str.contains(actvLent.text.toString().toLowerCase()) });
-                    actvDebtor.setAdapter(adapter)
-                    actvDebtor.showDropDown()
-                }
-        meDebtor.setOnCheckedChangeListener { compoundButton, b ->
-            meLent.isChecked = !b
-            actvDebtor.isEnabled = !b
-        }
-        meLent.setOnCheckedChangeListener { compoundButton, b ->
-            meDebtor.isChecked = !b
-            actvLent.isEnabled = !b
-        }
     }
 
     override fun onDateSet(view: DatePickerDialog?, year: Int, monthOfYear: Int, dayOfMonth: Int) {

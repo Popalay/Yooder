@@ -52,7 +52,6 @@ dependencies {
     compile 'com.wdullaer:materialdatetimepicker:1.5.1'
     compile 'com.github.clans:fab:1.6.0'
     compile 'com.amulyakhare:com.amulyakhare.textdrawable:1.0.1'
-    compile 'com.github.arcadefire:nice-spinner:d65f4fe052'
 
     compile 'com.parse:parse-android:1.10.1'
     compile 'com.parse.bolts:bolts-android:1.+'

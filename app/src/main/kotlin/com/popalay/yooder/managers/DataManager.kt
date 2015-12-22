@@ -1,5 +1,6 @@
 package com.popalay.yooder.managers
 
+import android.util.Log
 import com.parse.ParseUser
 import com.parse.SignUpCallback
 import rx.Observable
@@ -19,5 +20,10 @@ class DataManager {
         return ParseObservable.logIn(userName, password)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+    }
+
+    fun findUser(userName: String): Observable<ParseUser> {
+        Log.d("Find", userName)
+        return ParseObservable.find(ParseUser.getQuery().whereContains("name", userName))
     }
 }

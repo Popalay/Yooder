@@ -66,17 +66,19 @@ public class LoginFragment : Fragment() {
     }
 
     private fun login(userName: String, password: String) {
-        DataManager().loginUser(userName, password).subscribe(
-                {
-                    user ->
-                    BusProvider.instance.post(LoginButtonEvent(true))
-                    snackbar("Welcome ${user.getString("FullName")}!")
-                },
-                {
-                    e ->
-                    snackbar(e.message.toString())
-                }
-        ).unsubscribe()
+        println("userName = [$userName], password = [$password]")
+        DataManager().loginUser(userName, password)
+                .subscribe(
+                        {
+                            user ->
+                            BusProvider.instance.post(LoginButtonEvent(true))
+                            snackbar("Welcome ${user.getString("FullName")}!")
+                        },
+                        {
+                            e ->
+                            snackbar(e.message.toString())
+                        }
+                )
     }
 }
 

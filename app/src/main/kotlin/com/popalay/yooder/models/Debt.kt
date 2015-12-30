@@ -13,15 +13,12 @@ class Debt() : ParseObject() {
     var isDebtor: Boolean
         get() = getBoolean("isDebtor")
         set(value) = put("isDebtor", value)
-    var title: String
-        get() = getString("title")
-        set(value) = put("title", value)
-    var party: ParseUser
-        get() = getParseUser("party")
+    var description: String
+        get() = getString("description")
+        set(value) = put("description", value)
+    var party: String
+        get() = getString("party")
         set(value) = put("party", value)
-    var partyAnon: String
-        get() = getString("partyAnon")
-        set(value) = put("partyAnon", value)
     var amount: Double
         get() = getDouble("amount")
         set(value) = put("amount", value)

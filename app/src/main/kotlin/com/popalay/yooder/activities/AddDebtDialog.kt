@@ -2,23 +2,24 @@ package com.popalay.yooder.activities
 
 import android.os.Bundle
 import android.support.v4.app.NavUtils
+import android.text.TextUtils
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.ArrayAdapter
-import com.jakewharton.rxbinding.widget.RxTextView
 import com.parse.ParseUser
 import com.popalay.yooder.R
+import com.popalay.yooder.models.Debt
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
 import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog
 import kotlinx.android.synthetic.main.dialog_add_debt.*
-import rx.android.schedulers.AndroidSchedulers
+import java.text.SimpleDateFormat
 import java.util.*
-import java.util.concurrent.TimeUnit
 
 class AddDebtDialog : BaseActivity(), DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
 
     val TAG = AddDebtDialog::class.java.simpleName
+
+    var dateStr: String = "";
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,48 +31,35 @@ class AddDebtDialog : BaseActivity(), DatePickerDialog.OnDateSetListener, TimePi
         setSupportActionBar(toolbar)
         supportActionBar.title = "New Debt"
         supportActionBar.setDisplayHomeAsUpEnabled(true)
-        btnSetDate.setOnClickListener {
-            var now = Calendar.getInstance();
-            DatePickerDialog.newInstance(
-                    this,
-                    now.get(Calendar.YEAR),
-                    now.get(Calendar.MONTH),
-                    now.get(Calendar.DAY_OF_MONTH)
-            ).show(fragmentManager, "Datepickerdialog");
+        date.editText.setOnFocusChangeListener { view, b ->
+            if (b) {
+                var now = Calendar.getInstance();
+                DatePickerDialog.newInstance(
+                        this,
+                        now.get(Calendar.YEAR),
+                        now.get(Calendar.MONTH),
+                        now.get(Calendar.DAY_OF_MONTH)
+                ).show(fragmentManager, "Datepickerdialog");
+            }
         }
-        btnSetTime.setOnClickListener {
-            var now = Calendar.getInstance();
-            TimePickerDialog.newInstance(
-                    this,
-                    now.get(Calendar.HOUR_OF_DAY),
-                    now.get(Calendar.MINUTE),
-                    true
-            ).show(fragmentManager, "Timepickerdialog");
-        }
-
-        party.requestFocus()
-        var adapter = ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
-        actvParty.setAdapter(adapter)
-        RxTextView.afterTextChangeEvents(actvParty)
-               // .filter { actvParty.text.count() > 0 }
-                .debounce(100, TimeUnit.MILLISECONDS)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe {
-                    ParseUser.getQuery().whereContains("FullName", actvParty.text.toString())
-                            .findInBackground { users, e ->
-                                adapter.clear()
-                                adapter.addAll(users.map { user -> user.getString("FullName")  + "\n" + user.username})
-                                actvParty.showDropDown()
-                            }
-                }
     }
 
     override fun onDateSet(view: DatePickerDialog?, year: Int, monthOfYear: Int, dayOfMonth: Int) {
-        btnSetDate.text = "$dayOfMonth.${monthOfYear + 1}.$year"
+        dateStr = "$dayOfMonth.${monthOfYear + 1}.$year"
+        var now = Calendar.getInstance();
+        TimePickerDialog.newInstance(
+                this,
+                now.get(Calendar.HOUR_OF_DAY),
+                now.get(Calendar.MINUTE),
+                true
+        ).show(fragmentManager, "Timepickerdialog");
+        date.clearFocus();
     }
 
     override fun onTimeSet(view: RadialPickerLayout?, hourOfDay: Int, minute: Int) {
-        btnSetTime.text = "$hourOfDay : $minute"
+        dateStr += " $hourOfDay:$minute"
+        date.editText.setText(dateStr)
+        date.clearFocus();
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -96,6 +84,33 @@ class AddDebtDialog : BaseActivity(), DatePickerDialog.OnDateSetListener, TimePi
 
     private fun save() {
         //save model
-        finish()
+        var debt = Debt()
+        var isOk = true
+        debt.author = ParseUser.getCurrentUser()
+        amount.error = if (TextUtils.isEmpty(amount.editText.text)) {
+            isOk = false
+            getString(R.string.error_empty)
+        } else null
+        party.error = if (TextUtils.isEmpty(party.editText.text)) {
+            isOk = false
+            getString(R.string.error_empty)
+        } else null
+        description.error = if (TextUtils.isEmpty(description.editText.text)) {
+            isOk = false
+            getString(R.string.error_empty)
+        } else null
+        date.error = if (TextUtils.isEmpty(date.editText.text)) {
+            isOk = false
+            getString(R.string.error_empty)
+        } else null
+        if (isOk) {
+            debt.amount = amount.editText.text.toString().toDouble()
+            debt.isDebtor = isDebtor.isChecked
+            debt.party = party.editText.text.toString()
+            debt.description = description.editText.text.toString()
+            debt.date = SimpleDateFormat("dd.MM.yyyy HH:mm").parse(date.editText.text.toString())
+            debt.saveEventually()
+            finish()
+        }
     }
 }

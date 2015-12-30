@@ -16,6 +16,7 @@
     <string name="links.login">Already a member? Login</string>
     <string name="navigation.reminders">Reminders</string>
     <string name="action.logout">Logout</string>
+    <string name="error.empty">This field can`t be empty</string>
 
     <string-array name="currency_array">
         <item>₴ UAH</item>

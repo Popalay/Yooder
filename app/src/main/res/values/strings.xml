@@ -10,7 +10,7 @@
     <string name="models.user.password">Password</string>
     <string name="buttons.login">Log in</string>
     <string name="links.signup">Create an account</string>
-    <string name="massage.logIn">Log In or Create an Account</string>
+    <string name="massage.logIn">Log in or create an account</string>
     <string name="models.user.name">Name</string>
     <string name="buttons.signup">Create Account</string>
     <string name="links.login">Already a member? Login</string>

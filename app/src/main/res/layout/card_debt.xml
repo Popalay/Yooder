@@ -12,9 +12,9 @@
         android:id="@+id/amount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:textColor="@color/accent_light"
         android:textSize="50sp"
-        tools:text="50" />
+        tools:text="50"
+        tools:textColor="@color/accent_light" />
 
     <TextView
         android:id="@+id/party"
@@ -27,11 +27,11 @@
         tools:text="Party Name" />
 
     <ProgressBar
-        android:layout_marginTop="16dp"
         style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/amount"
+        android:layout_marginTop="16dp"
         android:max="100"
         tools:progress="20" />
 

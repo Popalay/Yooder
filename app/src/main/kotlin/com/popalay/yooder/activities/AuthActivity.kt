@@ -12,7 +12,7 @@ import com.popalay.yooder.fragments.LoginFragment
 import com.popalay.yooder.fragments.SignUpFragment
 import com.squareup.otto.Subscribe
 
-public class AuthActivity : BaseActivity(){
+public class AuthActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,7 +23,8 @@ public class AuthActivity : BaseActivity(){
     private fun setFragment(fragment: Fragment, tag: String) {
         if (supportFragmentManager.findFragmentByTag(tag) == null) {
             Log.i("Auth", "setFragment $tag")
-            supportFragmentManager.beginTransaction().replace(R.id.container, fragment, tag).commit()
+            supportFragmentManager.beginTransaction().setCustomAnimations(android.R.anim.slide_in_left,
+                    android.R.anim.slide_out_right).replace(R.id.container, fragment, tag).commit()
         }
     }
 

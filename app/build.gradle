@@ -53,7 +53,7 @@ dependencies {
     compile 'com.github.clans:fab:1.6.0'
     compile 'com.amulyakhare:com.amulyakhare.textdrawable:1.0.1'
 
-    compile 'com.parse:parse-android:1.10.1'
+    compile 'com.parse:parse-android:1.11.0'
     compile 'com.parse.bolts:bolts-android:1.+'
     compile 'com.infstory:rxparse:2.0.1'
 

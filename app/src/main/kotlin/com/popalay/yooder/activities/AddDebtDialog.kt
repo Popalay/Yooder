@@ -7,6 +7,8 @@ import android.view.Menu
 import android.view.MenuItem
 import com.parse.ParseUser
 import com.popalay.yooder.R
+import com.popalay.yooder.eventbus.AddedDebtEvent
+import com.popalay.yooder.eventbus.BusProvider
 import com.popalay.yooder.models.Debt
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
 import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout
@@ -102,7 +104,10 @@ class AddDebtDialog : BaseActivity(), DatePickerDialog.OnDateSetListener, TimePi
         date.error = if (TextUtils.isEmpty(date.editText.text)) {
             isOk = false
             getString(R.string.error_empty)
-        } else null
+        } else if(!SimpleDateFormat("dd.MM.yyyy HH:mm").parse(date.editText.text.toString()).after(Date())) {
+            isOk = false
+            getString(R.string.error_illegal)
+        }  else null
         if (isOk) {
             debt.amount = amount.editText.text.toString().toDouble()
             debt.isDebtor = isDebtor.isChecked
@@ -110,6 +115,7 @@ class AddDebtDialog : BaseActivity(), DatePickerDialog.OnDateSetListener, TimePi
             debt.description = description.editText.text.toString()
             debt.date = SimpleDateFormat("dd.MM.yyyy HH:mm").parse(date.editText.text.toString())
             debt.saveEventually()
+            BusProvider.bus.post(AddedDebtEvent(debt))
             finish()
         }
     }

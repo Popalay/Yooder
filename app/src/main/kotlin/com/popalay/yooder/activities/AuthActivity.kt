@@ -53,11 +53,11 @@ public class AuthActivity : BaseActivity() {
 
     override fun onResume() {
         super.onResume()
-        BusProvider.instance.register(this)
+        BusProvider.bus.register(this)
     }
 
     override fun onPause() {
         super.onPause()
-        BusProvider.instance.unregister(this)
+        BusProvider.bus.unregister(this)
     }
 }

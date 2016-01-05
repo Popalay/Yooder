@@ -17,6 +17,7 @@
     <string name="navigation.reminders">Reminders</string>
     <string name="action.logout">Logout</string>
     <string name="error.empty">This field can`t be empty</string>
+    <string name="error.illegal">Illegal value</string>
 
     <string-array name="currency_array">
         <item>₴ UAH</item>

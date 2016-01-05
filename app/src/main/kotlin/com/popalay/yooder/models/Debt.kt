@@ -2,6 +2,7 @@ package com.popalay.yooder.models
 
 import com.parse.ParseClassName
 import com.parse.ParseObject
+import com.parse.ParseQuery
 import com.parse.ParseUser
 import java.util.*
 
@@ -25,4 +26,10 @@ class Debt() : ParseObject() {
     var date: Date
         get() = getDate("date")
         set(value) = put("date", value)
+
+    companion object {
+        fun getByAuthor(author: ParseUser): ParseQuery<Debt> {
+            return ParseQuery<Debt>(Debt::class.java).whereEqualTo("author", author)
+        }
+    }
 }

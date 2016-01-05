@@ -1,9 +1,11 @@
 package com.popalay.yooder.eventbus
 
-public final class SignupButtonEvent(val email:String = "") {
-}
+import com.popalay.yooder.models.Debt
 
-public class LoginButtonEvent(val success:Boolean) {
-}
+public final class SignupButtonEvent(val email: String = "")
+
+public class LoginButtonEvent(val success: Boolean)
+
+public class AddedDebtEvent(val debt: Debt)
 
 

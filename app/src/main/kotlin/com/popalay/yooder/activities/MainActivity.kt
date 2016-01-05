@@ -12,7 +12,6 @@ import com.amulyakhare.textdrawable.util.ColorGenerator
 import com.parse.ParseUser
 import com.popalay.yooder.R
 import com.popalay.yooder.fragments.RemindersFragment
-import com.popalay.yooder.managers.DataManager
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.header.view.*
 
@@ -70,9 +69,9 @@ public class MainActivity : BaseActivity() {
     }
 
     private fun setUserInfo() {
-        var username = DataManager().getUser().getString("FullName") ?: ""
+        var username = ParseUser.getCurrentUser().getString("FullName") ?: ""
         navigationView.getHeaderView(0).username.text = username
-        navigationView.getHeaderView(0).email.text = DataManager().getUser().email ?: ""
+        navigationView.getHeaderView(0).email.text = ParseUser.getCurrentUser().email ?: ""
 
         var generator = ColorGenerator.MATERIAL
         // generate random color

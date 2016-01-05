@@ -30,6 +30,7 @@ class Debt() : ParseObject() {
     companion object {
         fun getByAuthor(author: ParseUser): ParseQuery<Debt> {
             return ParseQuery<Debt>(Debt::class.java).whereEqualTo("author", author)
+                    .setCachePolicy(ParseQuery.CachePolicy.CACHE_THEN_NETWORK);
         }
     }
 }

@@ -30,13 +30,15 @@ public class DebtsTabFragment : Fragment(), AnkoLogger {
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        recycler.layoutManager = LinearLayoutManager(activity)
+        recycler.layoutManager = LinearLayoutManager(context)
         recycler.setHasFixedSize(true)
         recycler.adapter = adapter
         Debt.getByAuthor(ParseUser.getCurrentUser()).findInBackground { debts, e ->
-            adapter.debts = debts
-            adapter.notifyDataSetChanged()
-            Log.d("ss", adapter.itemCount.toString())
+            if (e == null) {
+                adapter.debts = debts
+                adapter.notifyDataSetChanged()
+                Log.d("ss", adapter.itemCount.toString())
+            }
         }
     }
 

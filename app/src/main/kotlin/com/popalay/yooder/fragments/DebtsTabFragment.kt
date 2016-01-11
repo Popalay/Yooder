@@ -1,11 +1,13 @@
 package com.popalay.yooder.fragments
 
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import co.dift.ui.SwipeToAction
 import com.github.pwittchen.reactivenetwork.library.ConnectivityStatus
 import com.github.pwittchen.reactivenetwork.library.ReactiveNetwork
 import com.parse.ParseObject
@@ -16,6 +18,7 @@ import com.popalay.yooder.eventbus.BusProvider
 import com.popalay.yooder.lists.DebtAdapter
 import com.popalay.yooder.models.Debt
 import com.squareup.otto.Subscribe
+import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration
 import kotlinx.android.synthetic.main.tab_fragment_debts.*
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.debug
@@ -59,6 +62,35 @@ public class DebtsTabFragment : Fragment(), AnkoLogger {
         recycler.adapter = adapter
         recycler.layoutManager = LinearLayoutManager(context)
         recycler.setHasFixedSize(true)
+        recycler.addItemDecoration(
+                HorizontalDividerItemDecoration.Builder(context)
+                        .sizeResId(R.dimen.divider)
+                        .marginResId(R.dimen.divider_margin_left, R.dimen.divider_margin_right)
+                        .build())
+        val swipeToAction = SwipeToAction(recycler, object : SwipeToAction.SwipeListener<Debt> {
+
+            override fun onLongClick(itemData: Debt) {
+
+            }
+
+            override fun swipeLeft(itemData: Debt): Boolean {
+                return true;
+            }
+
+            override fun swipeRight(itemData: Debt): Boolean {
+                val index = adapter.debts.indexOf(itemData)
+                adapter.debts.remove(itemData)
+                adapter.notifyItemRemoved(index)
+                Snackbar.make(getView(), "${itemData.amount} removed", Snackbar.LENGTH_LONG).setAction("Undo") {
+                    adapter.debts.add(index, itemData)
+                    adapter.notifyItemInserted(index)
+                }.show()
+                return true
+            }
+
+            override fun onClick(itemData: Debt) {
+            }
+        });
     }
 
     fun load() {
@@ -71,7 +103,7 @@ public class DebtsTabFragment : Fragment(), AnkoLogger {
                 adapter.debts = debts
                 adapter.notifyDataSetChanged()
                 info(debts.size)
-            }else{
+            } else {
                 error(e.message!!)
             }
             if (swipeRefresh.isRefreshing) {

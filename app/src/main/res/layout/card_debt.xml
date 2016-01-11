@@ -1,33 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    card_view:cardCornerRadius="0dp"
-    card_view:cardPreventCornerOverlap="false"
-    card_view:cardUseCompatPadding="true">
-
-    <ImageView
-        android:id="@+id/progress"
-        android:layout_width="8dp"
-        android:layout_height="match_parent"
-        tools:background="@color/red" />
+    android:layout_height="wrap_content">
 
     <RelativeLayout
+        android:tag="reveal-right"
+        android:background="@color/oil"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="20dp"
+            android:tint="@color/white"
+            android:src="@drawable/ic_delete"/>
+    </RelativeLayout>
+
+    <!-- this view reveals when swipe left -->
+    <RelativeLayout
+        android:tag="reveal-left"
+        android:background="@color/green"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="20dp"
+            android:tint="@color/white"
+            android:src="@drawable/ic_done"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:tag="front"
+        android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingBottom="8dp"
         android:paddingEnd="8dp"
-        android:paddingStart="24dp"
+        android:paddingStart="16dp"
         android:paddingTop="8dp">
 
+        <ImageView
+            android:id="@+id/progress"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="16dp"
+            tools:background="@color/red" />
+
         <TextView
-            android:gravity="center"
             android:id="@+id/amount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/progress"
             android:drawableEnd="@drawable/ic_money_small"
+            android:gravity="center"
             android:textColor="@color/oil"
             android:textSize="@dimen/large_text_size"
             tools:text="50" />
@@ -46,21 +82,21 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/amount"
-            android:layout_alignParentStart="true"
+            android:layout_toEndOf="@id/progress"
             tools:text="Взял чтобы похавать в универе булочку" />
 
         <TextView
             android:id="@+id/date"
-            android:layout_marginTop="8dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_below="@id/description"
             android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="8dp"
             android:drawableEnd="@drawable/ic_date_small"
             android:gravity="center"
             tools:text="23.11.2015 " />
 
     </RelativeLayout>
 
-</android.support.v7.widget.CardView>
+</FrameLayout>

@@ -18,6 +18,8 @@
     <string name="action.logout">Logout</string>
     <string name="error.empty">This field can`t be empty</string>
     <string name="error.illegal">Illegal value</string>
+    <string name="deleted">Deleted</string>
+    <string name="undo">Undo</string>
 
     <string-array name="currency_array">
         <item>₴ UAH</item>

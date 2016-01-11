@@ -13,6 +13,7 @@ import com.github.clans.fab.FloatingActionMenu;
 import java.util.List;
 
 public class FloatingActionMenuBehavior extends CoordinatorLayout.Behavior {
+
     private float mTranslationY;
 
     public FloatingActionMenuBehavior(Context context, AttributeSet attrs) {
@@ -31,6 +32,44 @@ public class FloatingActionMenuBehavior extends CoordinatorLayout.Behavior {
         }
 
         return false;
+    }
+
+    @Override
+    public void onDependentViewRemoved(CoordinatorLayout parent, View child, View dependency) {
+        if (child instanceof FloatingActionMenu && dependency instanceof Snackbar.SnackbarLayout) {
+            this.updateTranslation(parent, child, dependency);
+        }
+    }
+
+    /**
+     * onStartNestedScroll and onNestedScroll will hide/show the FabMenu when a scroll is detected.
+     */
+    @Override
+    public boolean onStartNestedScroll(CoordinatorLayout coordinatorLayout, View child,
+            View directTargetChild, View target, int nestedScrollAxes) {
+        return nestedScrollAxes == ViewCompat.SCROLL_AXIS_VERTICAL ||
+                super.onStartNestedScroll(coordinatorLayout, child, directTargetChild, target,
+                        nestedScrollAxes);
+    }
+
+    @Override
+    public void onStopNestedScroll(CoordinatorLayout coordinatorLayout, View child, View target) {
+        super.onStopNestedScroll(coordinatorLayout, child, target);
+        FloatingActionMenu fabMenu = (FloatingActionMenu) child;
+        fabMenu.showMenuButton(true);
+    }
+
+    @Override
+    public void onNestedScroll(CoordinatorLayout coordinatorLayout, View child, View target,
+            int dxConsumed, int dyConsumed, int dxUnconsumed, int dyUnconsumed) {
+        super.onNestedScroll(coordinatorLayout, child, target, dxConsumed, dyConsumed, dxUnconsumed,
+                dyUnconsumed);
+        FloatingActionMenu fabMenu = (FloatingActionMenu) child;
+        if (dyConsumed > 0 && !fabMenu.isMenuButtonHidden()) {
+            fabMenu.hideMenuButton(true);
+        } else if (dyConsumed < 0 && !fabMenu.isMenuButtonHidden()) {
+            fabMenu.hideMenuButton(true);
+        }
     }
 
     private void updateTranslation(CoordinatorLayout parent, View child, View dependency) {
@@ -59,34 +98,11 @@ public class FloatingActionMenuBehavior extends CoordinatorLayout.Behavior {
         for (int z = dependencies.size(); i < z; ++i) {
             View view = (View) dependencies.get(i);
             if (view instanceof Snackbar.SnackbarLayout && parent.doViewsOverlap(child, view)) {
-                minOffset = Math.min(minOffset, ViewCompat.getTranslationY(view) - (float) view.getHeight());
+                minOffset = Math.min(minOffset,
+                        ViewCompat.getTranslationY(view) - (float) view.getHeight());
             }
         }
 
         return minOffset;
-    }
-
-    /**
-     * onStartNestedScroll and onNestedScroll will hide/show the FabMenu when a scroll is detected.
-     */
-    @Override
-    public boolean onStartNestedScroll(CoordinatorLayout coordinatorLayout, View child,
-            View directTargetChild, View target, int nestedScrollAxes) {
-        return nestedScrollAxes == ViewCompat.SCROLL_AXIS_VERTICAL ||
-                super.onStartNestedScroll(coordinatorLayout, child, directTargetChild, target,
-                        nestedScrollAxes);
-    }
-
-    @Override
-    public void onNestedScroll(CoordinatorLayout coordinatorLayout, View child, View target,
-            int dxConsumed, int dyConsumed, int dxUnconsumed, int dyUnconsumed) {
-        super.onNestedScroll(coordinatorLayout, child, target, dxConsumed, dyConsumed, dxUnconsumed,
-                dyUnconsumed);
-        FloatingActionMenu fabMenu = (FloatingActionMenu) child;
-        if (dyConsumed > 0 && !fabMenu.isMenuButtonHidden()) {
-            fabMenu.hideMenuButton(true);
-        } else if (dyConsumed < 0 && fabMenu.isMenuButtonHidden()) {
-            fabMenu.showMenuButton(true);
-        }
     }
 }

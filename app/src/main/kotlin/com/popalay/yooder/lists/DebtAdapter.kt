@@ -5,11 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import co.dift.ui.SwipeToAction
-import com.amulyakhare.textdrawable.TextDrawable
 import com.popalay.yooder.R
 import com.popalay.yooder.models.Debt
 import kotlinx.android.synthetic.main.card_debt.view.*
 import org.jetbrains.anko.AnkoLogger
+import org.jetbrains.anko.backgroundResource
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -34,10 +34,10 @@ class DebtAdapter : RecyclerView.Adapter<DebtAdapter.DebtViewHolder>(), AnkoLogg
             var b = (debt.date.time - debt.createdAt.time).toFloat()
             var p = a / b * 100
             when (p) {
-                in 0..25 -> progress.setImageDrawable(TextDrawable.builder().buildRound("", resources.getColor(R.color.green)))
-                in 26..50 -> progress.setImageDrawable(TextDrawable.builder().buildRound("", resources.getColor(R.color.yellow)))
-                in 51..75 -> progress.setImageDrawable(TextDrawable.builder().buildRound("", resources.getColor(R.color.orange)))
-                else -> progress.setImageDrawable(TextDrawable.builder().buildRound("", resources.getColor(R.color.red)))
+                in 0..25 -> progress.backgroundResource = R.color.green//progress.setImageDrawable(TextDrawable.builder().buildRect("", resources.getColor(R.color.green)))
+                in 26..50 -> progress.backgroundResource = R.color.yellow
+                in 51..75 -> progress.backgroundResource = R.color.orange
+                else -> progress.backgroundResource = R.color.red
             }
             description.text = debt.description
             date.text = "to " + SimpleDateFormat("dd.MM.yyyy HH:mm ").format(debt.date)

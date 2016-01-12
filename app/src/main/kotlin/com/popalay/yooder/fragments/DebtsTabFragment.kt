@@ -18,7 +18,6 @@ import com.popalay.yooder.eventbus.BusProvider
 import com.popalay.yooder.lists.DebtAdapter
 import com.popalay.yooder.models.Debt
 import com.squareup.otto.Subscribe
-import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration
 import kotlinx.android.synthetic.main.tab_fragment_debts.*
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.debug
@@ -62,11 +61,10 @@ public class DebtsTabFragment : Fragment(), AnkoLogger {
         recycler.adapter = adapter
         recycler.layoutManager = LinearLayoutManager(context)
         recycler.setHasFixedSize(true)
-        recycler.addItemDecoration(
+/*        recycler.addItemDecoration(
                 HorizontalDividerItemDecoration.Builder(context)
-                        .sizeResId(R.dimen.divider)
                         .marginResId(R.dimen.divider_margin_left, R.dimen.divider_margin_right)
-                        .build())
+                        .build())*/
         val swipeToAction = SwipeToAction(recycler, object : SwipeToAction.SwipeListener<Debt> {
 
             override fun onLongClick(itemData: Debt) {

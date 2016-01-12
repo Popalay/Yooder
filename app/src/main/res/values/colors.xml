@@ -6,7 +6,7 @@
 
     <color name="accent_dark">#97533d</color>
     <color name="accent_light">#de795a</color>
-    <color name="mainBackground">#F1F1F1</color>
+    <color name="mainBackground">#E2E2E2</color>
     <color name="controlNormal">#FFFF</color>
 
     <color name="black">#000000</color>
@@ -19,9 +19,9 @@
     <color name="iron">#CCCCCC</color>
     <color name="white">#FFFFFF</color>
 
-    <color name="green">#66BB6A</color>
-    <color name="yellow">#FFCA28</color>
-    <color name="orange">#FFA726</color>
-    <color name="red">#ba5a58</color>
+    <color name="green">#FC4bb662</color>
+    <color name="yellow">#FCCA28</color>
+    <color name="orange">#FCA726</color>
+    <color name="red">#FC6D6D</color>
 
 </resources>

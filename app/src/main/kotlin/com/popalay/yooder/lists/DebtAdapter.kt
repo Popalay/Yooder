@@ -30,23 +30,29 @@ class DebtAdapter : RecyclerView.Adapter<DebtAdapter.DebtViewHolder>(), AnkoLogg
         with(holder.itemView) {
             amount.text = debt.amount.toString()
             party.text = (if (debt.isDebtor) "from " else "to ") + debt.party
-            var a = (Date().time - debt.createdAt.time).toFloat()
-            var b = (debt.date.time - debt.createdAt.time).toFloat()
-            var p = a / b * 100
-            when (p) {
-                in 0..25 -> progress.backgroundResource = R.color.green//progress.setImageDrawable(TextDrawable.builder().buildRect("", resources.getColor(R.color.green)))
-                in 26..50 -> progress.backgroundResource = R.color.yellow
-                in 51..75 -> progress.backgroundResource = R.color.orange
-                else -> progress.backgroundResource = R.color.red
+            if(debt.date != null) {
+                var a = (Date().time - debt.createdAt.time).toFloat()
+                var b = ((debt.date as Date).time - debt.createdAt.time).toFloat()
+                var p = a / b * 100
+                when (p) {
+                    in 0..25 -> progress.backgroundResource = R.color.green
+                    in 26..50 -> progress.backgroundResource = R.color.yellow
+                    in 51..75 -> progress.backgroundResource = R.color.orange
+                    else -> progress.backgroundResource = R.color.red
+                }
+                date.visibility = View.VISIBLE
+                date.text = "to " + SimpleDateFormat("dd.MM.yyyy HH:mm ").format(debt.date)
+            } else {
+                progress.backgroundResource = R.color.jumbo
+                date.visibility = View.GONE
             }
             description.text = debt.description
-            date.text = "to " + SimpleDateFormat("dd.MM.yyyy HH:mm ").format(debt.date)
         }
         holder.data = debt
     }
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): DebtViewHolder? {
-        var view = LayoutInflater.from(parent?.context).inflate(R.layout.card_debt, null)
+        var view = LayoutInflater.from(parent?.context).inflate(R.layout.card_debt_default, null)
         return DebtViewHolder(view)
     }
 

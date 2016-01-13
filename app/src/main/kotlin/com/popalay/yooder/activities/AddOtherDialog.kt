@@ -7,31 +7,31 @@ import android.view.Menu
 import android.view.MenuItem
 import com.parse.ParseUser
 import com.popalay.yooder.R
-import com.popalay.yooder.eventbus.AddedDebtEvent
+import com.popalay.yooder.eventbus.AddedOtherEvent
 import com.popalay.yooder.eventbus.BusProvider
-import com.popalay.yooder.models.Debt
+import com.popalay.yooder.models.Other
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
 import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog
-import kotlinx.android.synthetic.main.dialog_add_debt.*
+import kotlinx.android.synthetic.main.dialog_add_other.*
 import java.text.SimpleDateFormat
 import java.util.*
 
-class AddDebtDialog : BaseActivity(), DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
+class AddOtherDialog : BaseActivity(), DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
 
-    val TAG = AddDebtDialog::class.java.simpleName
+    val TAG = AddOtherDialog::class.java.simpleName
 
     var dateStr: String = "";
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.dialog_add_debt)
+        setContentView(R.layout.dialog_add_other)
         baseInit()
     }
 
     private fun baseInit() {
         setSupportActionBar(toolbar)
-        supportActionBar.title = "New Debt"
+        supportActionBar.title = "New Remind"
         supportActionBar.setDisplayHomeAsUpEnabled(true)
         date.editText.setOnFocusChangeListener { view, b ->
             if (b) {
@@ -86,14 +86,10 @@ class AddDebtDialog : BaseActivity(), DatePickerDialog.OnDateSetListener, TimePi
 
     private fun save() {
         //save model
-        var debt = Debt()
+        var other = Other()
         var isOk = true
-        debt.author = ParseUser.getCurrentUser()
-        amount.error = if (TextUtils.isEmpty(amount.editText.text)) {
-            isOk = false
-            getString(R.string.error_empty)
-        } else null
-        party.error = if (TextUtils.isEmpty(party.editText.text)) {
+        other.author = ParseUser.getCurrentUser()
+        titleReminder.error = if (TextUtils.isEmpty(titleReminder.editText.text)) {
             isOk = false
             getString(R.string.error_empty)
         } else null
@@ -110,13 +106,11 @@ class AddDebtDialog : BaseActivity(), DatePickerDialog.OnDateSetListener, TimePi
             } else null
         }
         if (isOk) {
-            debt.amount = amount.editText.text.toString().toDouble()
-            debt.isDebtor = isDebtor.isChecked
-            debt.party = party.editText.text.toString()
-            debt.description = description.editText.text.toString()
-            debt.date = newDate
-            debt.saveEventually()
-            BusProvider.bus.post(AddedDebtEvent(debt))
+            other.title = titleReminder.editText.text.toString()
+            other.description = description.editText.text.toString()
+            other.date = newDate
+            other.saveEventually()
+            BusProvider.bus.post(AddedOtherEvent(other))
             finish()
         }
     }

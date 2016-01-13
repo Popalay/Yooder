@@ -61,10 +61,6 @@ public class DebtsTabFragment : Fragment(), AnkoLogger {
         recycler.adapter = adapter
         recycler.layoutManager = LinearLayoutManager(context)
         recycler.setHasFixedSize(true)
-/*        recycler.addItemDecoration(
-                HorizontalDividerItemDecoration.Builder(context)
-                        .marginResId(R.dimen.divider_margin_left, R.dimen.divider_margin_right)
-                        .build())*/
         val swipeToAction = SwipeToAction(recycler, object : SwipeToAction.SwipeListener<Debt> {
 
             override fun onLongClick(itemData: Debt) {
@@ -95,8 +91,8 @@ public class DebtsTabFragment : Fragment(), AnkoLogger {
         info("load")
         Debt.getByAuthor(ParseUser.getCurrentUser()).findInBackground { debts, e ->
             if (e == null) {
-                ParseObject.unpinAllInBackground {
-                    ParseObject.pinAll(debts)
+                ParseObject.unpinAllInBackground("debts") {
+                    ParseObject.pinAll("debts", debts)
                 }
                 adapter.debts = debts
                 adapter.notifyDataSetChanged()
@@ -112,7 +108,7 @@ public class DebtsTabFragment : Fragment(), AnkoLogger {
 
     fun loadFromLocal() {
         info("loadFromLocal")
-        Debt.getByAuthor(ParseUser.getCurrentUser()).fromLocalDatastore().findInBackground { debts, e ->
+        Debt.getByAuthor(ParseUser.getCurrentUser()).fromPin("debts").findInBackground { debts, e ->
             if (e == null) {
                 adapter.debts = debts
                 adapter.notifyDataSetChanged()

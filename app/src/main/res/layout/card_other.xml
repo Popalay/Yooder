@@ -20,32 +20,21 @@
         tools:background="@color/red" />
 
     <TextView
-        android:id="@+id/amount"
+        android:id="@+id/titleReminder"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toEndOf="@id/progress"
-        android:drawableEnd="@drawable/ic_money_small"
-        android:gravity="center"
         android:textColor="@color/oil"
         android:textSize="@dimen/large_text_size"
-        tools:text="50" />
-
-    <TextView
-        android:id="@+id/party"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toEndOf="@id/amount"
-        android:textColor="@color/oil"
-        android:textSize="@dimen/large_text_size"
-        tools:text="from Denis" />
+        tools:text="Title" />
 
     <TextView
         android:id="@+id/description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/amount"
+        android:layout_below="@id/titleReminder"
         android:layout_toEndOf="@id/progress"
-        tools:text="Взял чтобы похавать в универе булочку" />
+        tools:text="Подстричь овец" />
 
     <TextView
         android:id="@+id/date"
@@ -57,5 +46,5 @@
         android:layout_marginTop="8dp"
         android:drawableEnd="@drawable/ic_date_small"
         android:gravity="center"
-        tools:text="to 23.11.2015 " />
+        tools:text="23.11.2015 " />
 </RelativeLayout>

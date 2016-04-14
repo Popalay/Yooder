@@ -2,62 +2,94 @@ package com.popalay.yooder.activities
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.util.Log
+import android.support.design.widget.Snackbar
+import com.firebase.client.AuthData
+import com.firebase.client.Firebase
+import com.firebase.client.FirebaseError
+import com.google.android.gms.auth.api.Auth
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.auth.api.signin.GoogleSignInResult
+import com.google.android.gms.common.ConnectionResult
+import com.google.android.gms.common.api.GoogleApiClient
+import com.popalay.yooder.Application
 import com.popalay.yooder.R
-import com.popalay.yooder.eventbus.BusProvider
-import com.popalay.yooder.eventbus.LoginButtonEvent
-import com.popalay.yooder.eventbus.SignupButtonEvent
-import com.popalay.yooder.fragments.LoginFragment
-import com.popalay.yooder.fragments.SignUpFragment
-import com.squareup.otto.Subscribe
+import com.popalay.yooder.extensions.snackbar
+import kotlinx.android.synthetic.main.activity_auth.*
+import java.util.*
+import javax.inject.Inject
 
-public class AuthActivity : BaseActivity() {
+class AuthActivity : BaseActivity(), GoogleApiClient.OnConnectionFailedListener {
+
+    companion object {
+        private val RC_SIGN_IN = 0
+    }
+
+    @Inject lateinit var ref: Firebase
+
+    lateinit var googleApiClient: GoogleApiClient
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_auth)
-        setFragment(LoginFragment(), LoginFragment.TAG)
+        Application.graph.inject(this)
+        initUI()
+        init()
     }
 
-    private fun setFragment(fragment: Fragment, tag: String) {
-        if (supportFragmentManager.findFragmentByTag(tag) == null) {
-            Log.i("Auth", "setFragment $tag")
-            supportFragmentManager.beginTransaction().setCustomAnimations(android.R.anim.slide_in_left,
-                    android.R.anim.slide_out_right).replace(R.id.container, fragment, tag).commit()
+    private fun init() {
+        val gso = GoogleSignInOptions.Builder(
+                GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build()
+        googleApiClient = GoogleApiClient.Builder(this).enableAutoManage(this, this).addApi(Auth.GOOGLE_SIGN_IN_API, gso).build()
+    }
+
+    private fun initUI() {
+        btnLogin.setOnClickListener {
+            val signInIntent = Auth.GoogleSignInApi.getSignInIntent(googleApiClient)
+            startActivityForResult(signInIntent, RC_SIGN_IN)
         }
     }
 
-    @Subscribe
-    public fun onLoginButton(event: LoginButtonEvent) {
-        when (event.success) {
-            true -> {
-                var intent = Intent(this, MainActivity::class.java)
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                startActivity(intent);
-                //startActivity(intentFor<MainActivity>().newTask().clearTop())
-                finish()
+    override fun onConnectionFailed(p0: ConnectionResult) {
+
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == RC_SIGN_IN) {
+            val result = Auth.GoogleSignInApi.getSignInResultFromIntent(data)
+            handleSignInResult(result)
+        }
+    }
+
+    private fun handleSignInResult(result: GoogleSignInResult) {
+        if (result.isSuccess) {
+            // Signed in successfully, show authenticated UI.
+            val acct = result.signInAccount
+            if (acct != null) {
+                loginUser(acct)
             }
-            else -> setFragment(LoginFragment(), LoginFragment.TAG)
         }
     }
 
-    @Subscribe
-    public fun onSignupButton(event: SignupButtonEvent) {
-        when (event.email) {
-            "" -> setFragment(SignUpFragment(), SignUpFragment.TAG)
-            else -> setFragment(LoginFragment.create(event.email), LoginFragment.TAG)
+    private fun loginUser(acct: GoogleSignInAccount?) {
+
+        val authResultHandler = object : Firebase.AuthResultHandler {
+            override fun onAuthenticated(authData: AuthData) {
+                var map: HashMap<String, String> = HashMap()
+                map.put("provider", authData.provider);
+                if (authData.providerData?.containsKey("displayName") as Boolean) {
+                    map.put("displayName", authData.providerData["displayName"].toString());
+                }
+                ref.child("users").child(authData.uid).setValue(map);
+            }
+
+            override fun onAuthenticationError(error: FirebaseError) {
+                snackbar(coordinator, error.message, Snackbar.LENGTH_LONG)
+            }
+
         }
+
+        ref.authWithOAuthToken("google", "<oauth-token>", authResultHandler);//todo
     }
 
-    override fun onResume() {
-        super.onResume()
-        BusProvider.bus.register(this)
-    }
-
-    override fun onPause() {
-        super.onPause()
-        BusProvider.bus.unregister(this)
-    }
 }

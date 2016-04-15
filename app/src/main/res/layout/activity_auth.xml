@@ -4,20 +4,32 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:padding="32dp">
+        android:background="@color/primary"
+        android:orientation="vertical">
+
+        <ImageView
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_centerInParent="true"
+            android:layout_height="200dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/background" />
 
 
-        <com.google.android.gms.common.SignInButton
+        <Button
+            android:layout_margin="32dp"
             android:id="@+id/btnLogin"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/common_google_signin_btn_text_light"
+            android:text="@string/common_signin_button_text_long"
+            android:textAllCaps="false" />
 
-    </LinearLayout>
+    </RelativeLayout>
 
 
 </android.support.design.widget.CoordinatorLayout>

@@ -5,6 +5,7 @@ import com.firebase.client.Firebase
 import com.popalay.yooder.di.AppComponent
 import com.popalay.yooder.di.AppModule
 import com.popalay.yooder.di.DaggerAppComponent
+import com.vk.sdk.VKSdk
 
 class Application : Application() {
 
@@ -17,5 +18,6 @@ class Application : Application() {
         graph = DaggerAppComponent.builder().appModule(AppModule(this)).build()
         Firebase.setAndroidContext(this)
         Firebase.getDefaultConfig().isPersistenceEnabled = true
+        VKSdk.initialize(this);
     }
 }

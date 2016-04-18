@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import com.popalay.yooder.R
+import com.vk.sdk.VKSdk
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.clearTop
 import org.jetbrains.anko.intentFor
@@ -18,11 +19,16 @@ class MainActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         // Get current user
-        if (true) navigateToAuth()
-        else {
+        if (!VKSdk.isLoggedIn()) {
+            navigateToAuth()
+        } else {
             setSupportActionBar(toolbar)
-            supportActionBar?.subtitle = "Reminders"
+            init()
         }
+    }
+
+    private fun init() {
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -32,7 +38,13 @@ class MainActivity : BaseActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return super.onOptionsItemSelected(item);
+        when (item.itemId) {
+            R.id.logout -> {
+                logout()
+                return true
+            }
+            else -> return super.onOptionsItemSelected(item);
+        }
     }
 
     private fun navigateToAuth() {
@@ -43,6 +55,7 @@ class MainActivity : BaseActivity() {
     }
 
     private fun logout() {
+        VKSdk.logout()
         navigateToAuth()
     }
 }

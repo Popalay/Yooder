@@ -27,19 +27,9 @@
             android:name=".activities.AuthActivity"
             android:label="@string/activity.auth" />
         <activity
-            android:name=".activities.AddDebtDialog"
-            android:parentActivityName=".activities.MainActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.MainActivity" />
-        </activity>
-        <activity
-            android:name=".activities.AddOtherDialog"
-            android:parentActivityName=".activities.MainActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.MainActivity" />
-        </activity>
+            android:name="com.vk.sdk.VKServiceActivity"
+            android:label="ServiceActivity"
+            android:theme="@style/VK.Transparent" />
     </application>
 
 </manifest>

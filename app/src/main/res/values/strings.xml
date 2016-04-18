@@ -20,6 +20,7 @@
     <string name="error.illegal">Illegal value</string>
     <string name="deleted">Deleted</string>
     <string name="undo">Undo</string>
+    <string name="logout">Logout</string>
 
     <string-array name="currency_array">
         <item>₴ UAH</item>

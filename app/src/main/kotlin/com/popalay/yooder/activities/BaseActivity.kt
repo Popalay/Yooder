@@ -1,11 +1,15 @@
 package com.popalay.yooder.activities
 
 import android.content.Context
-import android.support.v7.app.AppCompatActivity
 import android.view.MotionEvent
 import android.view.inputmethod.InputMethodManager
+import com.trello.rxlifecycle.components.support.RxAppCompatActivity
+import java.util.logging.Logger
 
-abstract class BaseActivity : AppCompatActivity() {
+abstract class BaseActivity : RxAppCompatActivity() {
+
+    val logger = Logger.getLogger(this.javaClass.simpleName)
+
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         var view = this.currentFocus;
         if (view != null) {

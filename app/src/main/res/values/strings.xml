@@ -21,6 +21,10 @@
     <string name="deleted">Deleted</string>
     <string name="undo">Undo</string>
     <string name="logout">Logout</string>
+    <string name="log_in_with_vk">Log in with VK</string>
+    <string name="archive">Archive</string>
+    <string name="feed">Feed</string>
+    <string name="notifications">Notifications</string>
 
     <string-array name="currency_array">
         <item>₴ UAH</item>

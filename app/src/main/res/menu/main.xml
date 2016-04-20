@@ -5,7 +5,7 @@
     <group>
         <item
             android:id="@+id/logout"
-            android:icon="@drawable/ic_logout"
+            android:icon="@drawable/logout"
             android:title="@string/logout" />
     </group>
 

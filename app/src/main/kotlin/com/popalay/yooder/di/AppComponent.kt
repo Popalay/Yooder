@@ -1,6 +1,7 @@
 package com.popalay.yooder.di
 
 import com.popalay.yooder.activities.AuthActivity
+import com.popalay.yooder.activities.MainActivity
 import dagger.Component
 import javax.inject.Singleton
 
@@ -8,5 +9,7 @@ import javax.inject.Singleton
 @Component(modules = arrayOf(AppModule::class))
 interface  AppComponent {
 
-    fun inject(authActivity: AuthActivity)
+    fun inject(activity: AuthActivity)
+
+    fun inject(activity: MainActivity)
 }

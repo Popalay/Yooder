@@ -7,17 +7,17 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/primary"
         android:orientation="vertical">
 
-        <ImageView
-            android:gravity="center"
-            android:layout_width="match_parent"
-            android:layout_centerInParent="true"
-            android:layout_height="200dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/background" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:textSize="80sp"
+            android:textStyle="bold"
+            android:textColor="@color/accent"
+            android:text="@string/app_name"/>
 
         <Button
             android:layout_margin="32dp"
@@ -25,11 +25,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:background="@drawable/common_google_signin_btn_text_light"
-            android:text="@string/common_signin_button_text_long"
+            android:background="@color/vk"
+            android:textSize="18sp"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:drawableStart="@drawable/vk"
+            android:text="@string/log_in_with_vk"
             android:textAllCaps="false" />
 
     </RelativeLayout>
-
 
 </android.support.design.widget.CoordinatorLayout>

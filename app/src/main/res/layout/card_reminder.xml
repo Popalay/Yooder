@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:foreground="?android:attr/selectableItemBackground"
+    app:cardUseCompatPadding="true">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="#313d54"
+        android:padding="16dp">
+
+        <ImageView
+            android:id="@+id/photo"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="16dp"
+            tools:background="@color/white" />
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/photo"
+            android:layout_alignTop="@id/photo"
+            android:layout_marginBottom="8dp"
+            tools:text="Denis Nikiforov" />
+
+        <TextView
+            android:id="@+id/reminder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/photo"
+            android:layout_below="@id/name"
+            tools:text="You mst buy a milk" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:src="@drawable/expand"/>
+
+        <ImageView
+            android:id="@+id/prior"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:backgroundTint="@color/accent"
+            android:layout_alignParentEnd="true"
+            android:layout_alignTop="@id/name"
+            android:background="@drawable/circle"/>
+
+    </RelativeLayout>
+</android.support.v7.widget.CardView>

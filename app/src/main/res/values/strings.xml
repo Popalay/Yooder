@@ -25,6 +25,8 @@
     <string name="archive">Archive</string>
     <string name="feed">Feed</string>
     <string name="notifications">Notifications</string>
+    <string name="activity">Activity</string>
+    <string name="add_reminder">Add reminder</string>
 
     <string-array name="currency_array">
         <item>₴ UAH</item>

@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="primary">#212939</color>
-    <color name="primaryDark">#182129</color>
+    <color name="primaryDark">#212939</color>
     <color name="accent">#BD674C</color>
     <color name="text">#bfc4c7</color>
 
-    <color name="background">#212939</color>
+    <color name="background">#182129</color>
     <color name="vk">#597DA3</color>
+    <color name="selected">#313d54</color>
 
     <color name="black">#000000</color>
     <color name="jet">#222222</color>

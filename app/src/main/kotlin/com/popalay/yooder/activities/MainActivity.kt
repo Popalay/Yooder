@@ -1,8 +1,8 @@
 package com.popalay.yooder.activities
 
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
+import android.view.LayoutInflater
+import android.view.ViewGroup
 import com.bumptech.glide.Glide
 import com.firebase.client.Firebase
 import com.popalay.yooder.Application
@@ -13,12 +13,15 @@ import com.soikonomakis.rxfirebase.RxFirebase
 import com.trello.rxlifecycle.kotlin.bindToLifecycle
 import com.vk.sdk.VKAccessToken
 import com.vk.sdk.VKSdk
+import com.yalantis.guillotine.animation.GuillotineAnimation
 import it.sephiroth.android.library.bottomnavigation.BottomNavigation
 import jp.wasabeef.glide.transformations.CropCircleTransformation
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.guillotine.*
 import org.jetbrains.anko.clearTop
 import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.newTask
+import org.jetbrains.anko.onClick
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
 import javax.inject.Inject
@@ -26,6 +29,7 @@ import javax.inject.Inject
 class MainActivity : BaseActivity() {
 
     @Inject lateinit var ref: Firebase
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,12 +39,12 @@ class MainActivity : BaseActivity() {
         if (!VKSdk.isLoggedIn()) {
             navigateToAuth()
         } else {
+            initUI()
             init()
         }
     }
 
-    private fun init() {
-        logger.info("ddd")
+    private fun initUI() {
         setSupportActionBar(toolbar)
         supportActionBar?.title = null
 
@@ -62,6 +66,25 @@ class MainActivity : BaseActivity() {
             }
         })
 
+        val guillotineMenu = LayoutInflater.from(this).inflate(R.layout.guillotine, null)
+        guillotineMenu.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        root.addView(guillotineMenu);
+        val animationMenu = GuillotineAnimation.GuillotineBuilder(guillotineMenu, guillotineMenu.findViewById(R.id.guillotine_hamburger), contentHamburger)
+                .setActionBarViewForAnimation(toolbar)
+                .setClosedOnStart(true)
+                .build()
+
+        addReminder.onClick {
+            animationMenu.close()
+            //add
+        }
+        logout.onClick {
+            animationMenu.close()
+            logout()
+        }
+    }
+
+    private fun init() {
         RxFirebase.getInstance().observeSingleValue(ref.child("users").child(VKAccessToken.currentToken().userId))
                 .bindToLifecycle(this)
                 .subscribeOn(Schedulers.io())
@@ -75,22 +98,6 @@ class MainActivity : BaseActivity() {
                 }, { error ->
                     error.printStackTrace()
                 })
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.main, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.logout -> {
-                logout()
-                return true
-            }
-            else -> return super.onOptionsItemSelected(item);
-        }
     }
 
     private fun navigateToAuth() {

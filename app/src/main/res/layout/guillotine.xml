@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/primary"
     android:elevation="6dp"
+    android:gravity="center_horizontal"
     android:orientation="vertical"
     android:paddingBottom="16dp">
 
     <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar2"
         style="@style/Toolbar"
         app:contentInsetStart="0dp">
 
@@ -20,20 +22,27 @@
     </android.support.v7.widget.Toolbar>
 
     <TextView
+        android:layout_below="@id/toolbar2"
+        android:layout_centerInParent="true"
         android:id="@+id/addReminder"
         style="@style/TextView.GuillotineItem"
         android:drawableStart="@drawable/add"
         android:text="@string/add_reminder" />
 
     <TextView
+        android:id="@+id/activity"
+        android:layout_below="@id/addReminder"
         style="@style/TextView.GuillotineItem"
+        android:layout_alignStart="@id/addReminder"
         android:drawableStart="@drawable/activity"
         android:text="@string/activity" />
 
     <TextView
         android:id="@+id/logout"
+        android:layout_below="@id/activity"
+        android:layout_alignStart="@id/addReminder"
         android:layout_marginTop="8dp"
         style="@style/TextView.GuillotineItem"
         android:drawableStart="@drawable/logout"
         android:text="@string/logout" />
-</LinearLayout>
+</RelativeLayout>

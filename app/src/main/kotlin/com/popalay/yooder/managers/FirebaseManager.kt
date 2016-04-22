@@ -31,12 +31,14 @@ class FirebaseManager(val ref: Firebase) : DataManager {
                 }
     }
 
-    override fun getFriends(myId: String): Observable<User> {
+    override fun getFriends(myId: String): Observable<List<User>> {
         return RxFirebase.getInstance().observeSingleValue(ref.child("users").orderByChild("friends/$myId").equalTo(true))
+                .first()
                 .subscribeOn(Schedulers.io())
                 .flatMap { Observable.from(it.children) }
-                .doOnNext { Log.d("ddd", it.key) }
                 .map { it.getValue(User::class.java) }
+                .doOnCompleted { Log.d("ddd", "complete")  }
+                .toSortedList { user, user1 -> user.compareTo(user1) }
 
     }
 }

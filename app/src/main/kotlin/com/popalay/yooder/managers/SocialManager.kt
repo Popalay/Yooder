@@ -8,4 +8,5 @@ interface SocialManager {
     fun login(activity: Activity)
     fun handleLogin(requestCode: Int, resultCode: Int, data: Intent?, callback: (User?, String?) -> Unit):Boolean
     open fun friends(callback: (MutableList<User>) -> Unit)
+    open fun getMyId(): String
 }

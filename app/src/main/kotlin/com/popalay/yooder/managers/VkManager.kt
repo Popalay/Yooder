@@ -56,4 +56,6 @@ class VkManager : SocialManager {
                     }
                 })
     }
+
+    override fun getMyId() = VKAccessToken.currentToken().userId
 }

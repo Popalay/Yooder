@@ -8,10 +8,10 @@ import com.firebase.client.Firebase
 import com.popalay.yooder.Application
 import com.popalay.yooder.R
 import com.popalay.yooder.fragments.NotificationsFragment
+import com.popalay.yooder.managers.SocialManager
 import com.popalay.yooder.models.User
 import com.soikonomakis.rxfirebase.RxFirebase
 import com.trello.rxlifecycle.kotlin.bindToLifecycle
-import com.vk.sdk.VKAccessToken
 import com.vk.sdk.VKSdk
 import com.yalantis.guillotine.animation.GuillotineAnimation
 import it.sephiroth.android.library.bottomnavigation.BottomNavigation
@@ -29,6 +29,7 @@ import javax.inject.Inject
 class MainActivity : BaseActivity() {
 
     @Inject lateinit var ref: Firebase
+    @Inject lateinit var socialManager: SocialManager
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -77,6 +78,7 @@ class MainActivity : BaseActivity() {
         addReminder.onClick {
             animationMenu.close()
             //add
+            startActivity(intentFor<ChooseFriendActivity>().newTask().clearTop())
         }
         logout.onClick {
             animationMenu.close()
@@ -85,7 +87,8 @@ class MainActivity : BaseActivity() {
     }
 
     private fun init() {
-        RxFirebase.getInstance().observeSingleValue(ref.child("users").child(VKAccessToken.currentToken().userId))
+        //todo
+        RxFirebase.getInstance().observeSingleValue(ref.child("users").child(socialManager.getMyId()))
                 .bindToLifecycle(this)
                 .subscribeOn(Schedulers.io())
                 .map { dataSnapshot ->
@@ -94,7 +97,6 @@ class MainActivity : BaseActivity() {
                 .subscribe ({ user ->
                     Glide.with(this@MainActivity).load(user.photo).bitmapTransform(CropCircleTransformation(this@MainActivity)).into(avatar)
                     name.text = user.name
-
                 }, { error ->
                     error.printStackTrace()
                 })

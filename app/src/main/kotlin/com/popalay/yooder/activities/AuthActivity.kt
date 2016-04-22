@@ -47,7 +47,7 @@ class AuthActivity : BaseActivity(){
                 dataManager.saveUser(user)
                 socialManager.friends { friends ->
                     friends.forEach {
-                        dataManager.saveUser(it)
+                        dataManager.saveFriend(it, user.id)
                     }
                 }
                 toMain()

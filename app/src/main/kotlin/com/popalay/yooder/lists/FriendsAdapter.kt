@@ -9,10 +9,11 @@ import com.popalay.yooder.models.User
 import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView
 import jp.wasabeef.glide.transformations.CropCircleTransformation
 import kotlinx.android.synthetic.main.card_user.view.*
+import java.util.*
 
 class FriendsAdapter : RecyclerView.Adapter<UserViewHolder>(), FastScrollRecyclerView.SectionedAdapter {
 
-    var items = emptyList<User>()
+    var items = ArrayList<User>()
 
     override fun getSectionName(position: Int): String {
         return items[position].name[0].toString()

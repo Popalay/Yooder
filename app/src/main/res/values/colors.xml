@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="primary">#212939</color>
-    <color name="primaryDark">#212939</color>
+    <color name="primary">#182129</color>
+    <color name="primaryDark">#182129</color>
     <color name="accent">#BD674C</color>
     <color name="text">#bfc4c7</color>
 
-    <color name="background">#182129</color>
+    <color name="background">#273139</color>
     <color name="vk">#597DA3</color>
     <color name="selected">#313d54</color>
 
@@ -19,10 +19,10 @@
     <color name="iron">#CCCCCC</color>
     <color name="white">#FFFFFF</color>
 
-    <color name="green">#FC4bb662</color>
-    <color name="yellow">#FCCA28</color>
-    <color name="orange">#FCA726</color>
-    <color name="red">#FC6D6D</color>
+    <color name="green">#fc4e8c5b</color>
+    <color name="yellow">#c4ab5a</color>
+    <color name="orange">#a1793c</color>
+    <color name="red">#a95555</color>
     <color name="blue">#1d6b68</color>
     <color name="fiolet">#3E3665</color>
 

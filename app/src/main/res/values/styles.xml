@@ -6,15 +6,17 @@
         <item name="colorPrimaryDark">@color/primaryDark</item>
         <item name="colorAccent">@color/accent</item>
         <item name="android:colorBackground">@color/background</item>
+        <item name="android:navigationBarColor">@color/primaryDark</item>
         <item name="android:colorForeground">@color/text</item>
+        <item name="android:textColorPrimary">@color/text</item>
     </style>
 
     <style name="AuthTheme" parent="Theme.AppCompat.NoActionBar">
-        <item name="colorPrimary">@color/primary</item>
-        <item name="colorPrimaryDark">@color/primary</item>
+        <item name="colorPrimary">@color/primaryDark</item>
+        <item name="colorPrimaryDark">@color/primaryDark</item>
         <item name="colorAccent">@color/accent</item>
-        <item name="android:navigationBarColor">@color/primary</item>
-        <item name="android:colorBackground">@color/primary</item>
+        <item name="android:navigationBarColor">@color/primaryDark</item>
+        <item name="android:colorBackground">@color/primaryDark</item>
     </style>
 
 

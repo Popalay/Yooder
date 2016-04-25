@@ -32,7 +32,7 @@
             tools:text="Denis Nikiforov" />
 
         <TextView
-            android:id="@+id/reminder"
+            android:id="@+id/message"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toEndOf="@id/photo"

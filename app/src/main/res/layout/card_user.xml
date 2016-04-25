@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:clickable="true"
-    app:cardCornerRadius="0dp"
-    android:foreground="?android:attr/selectableItemBackgroundBorderless">
+    android:foreground="?android:attr/selectableItemBackgroundBorderless"
+    app:cardCornerRadius="0dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layout_toEndOf="@id/photo"
-            android:textSize="20sp"
+            android:textSize="18sp"
             tools:text="Denis Nikiforov" />
 
     </RelativeLayout>

@@ -2,6 +2,7 @@ package com.popalay.yooder.managers
 
 import android.util.Log
 import com.firebase.client.Firebase
+import com.popalay.yooder.models.Remind
 import com.popalay.yooder.models.User
 import com.soikonomakis.rxfirebase.RxFirebase
 import rx.Observable
@@ -37,8 +38,25 @@ class FirebaseManager(val ref: Firebase) : DataManager {
                 .subscribeOn(Schedulers.io())
                 .flatMap { Observable.from(it.children) }
                 .map { it.getValue(User::class.java) }
-                .doOnCompleted { Log.d("ddd", "complete")  }
+                .doOnCompleted { Log.d("ddd", "complete") }
                 .toSortedList { user, user1 -> user.compareTo(user1) }
 
     }
+
+    override fun getUser(userId: String): Observable<User> {
+        return RxFirebase.getInstance().observeSingleValue(ref.child("users/$userId"))
+                .subscribeOn(Schedulers.io())
+                .map { it.getValue(User::class.java) }
+
+    }
+
+    override fun saveRemind(remind: Remind) {
+        val id = ref.child("reminders").push().key
+        remind.id = id
+        remind.time = System.currentTimeMillis()
+        ref.child("reminders").child(remind.id).setValue(remind)
+    }
+
+    override fun getMyRemindersQuery(myId: String) = ref.child("reminders").orderByChild("from").equalTo(myId)
+    override fun getMyNotificationsQuery(myId: String) = ref.child("reminders").orderByChild("to").equalTo(myId)
 }

@@ -28,6 +28,7 @@
             android:label="@string/activity.auth"
             android:theme="@style/AuthTheme" />
         <activity android:name=".activities.ChooseFriendActivity" />
+        <activity android:name=".activities.InputMessageActivity" />
         <activity
             android:name="com.vk.sdk.VKServiceActivity"
             android:label="ServiceActivity"

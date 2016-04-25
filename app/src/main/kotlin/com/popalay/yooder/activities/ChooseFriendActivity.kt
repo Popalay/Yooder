@@ -9,6 +9,7 @@ import com.popalay.yooder.R
 import com.popalay.yooder.lists.FriendsAdapter
 import com.popalay.yooder.managers.DataManager
 import com.popalay.yooder.managers.SocialManager
+import com.popalay.yooder.widgets.setOnItemClickListener
 import com.trello.rxlifecycle.kotlin.bindToLifecycle
 import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration
 import kotlinx.android.synthetic.main.activity_choose_friend.*
@@ -52,13 +53,16 @@ class ChooseFriendActivity : BaseActivity() {
         val adapter = FriendsAdapter()
         recycler.adapter = adapter
         recycler.addItemDecoration(
-        HorizontalDividerItemDecoration.Builder(this)
-                .color(Color.WHITE)
-                .sizeResId(R.dimen.divider)
-                .colorResId(R.color.background)
-                .marginResId(R.dimen.divider_margin_left, R.dimen.divider_margin_right)
-                .build());
-
+                HorizontalDividerItemDecoration.Builder(this)
+                        .color(Color.WHITE)
+                        .sizeResId(R.dimen.divider)
+                        .colorResId(R.color.background)
+                        .marginResId(R.dimen.divider_margin_left, R.dimen.divider_margin_right)
+                        .build());
+        recycler.setOnItemClickListener { position ->
+            logger.info(position.toString())
+            InputMessageActivity.open(this, adapter.items[position].id)
+        }
         dataManager.getFriends(socialManager.getMyId())
                 .bindToLifecycle(this)
                 .observeOn(AndroidSchedulers.mainThread())

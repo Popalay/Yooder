@@ -5,6 +5,9 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.view.ViewAnimationUtils
+import android.view.animation.AccelerateInterpolator
 import com.popalay.yooder.Application
 import com.popalay.yooder.R
 import com.popalay.yooder.managers.DataManager
@@ -12,9 +15,7 @@ import com.popalay.yooder.managers.SocialManager
 import com.popalay.yooder.models.Remind
 import com.trello.rxlifecycle.kotlin.bindToLifecycle
 import kotlinx.android.synthetic.main.activity_input_message.*
-import org.jetbrains.anko.clearTop
-import org.jetbrains.anko.intentFor
-import org.jetbrains.anko.newTask
+import org.jetbrains.anko.*
 import rx.android.schedulers.AndroidSchedulers
 import javax.inject.Inject
 
@@ -94,6 +95,38 @@ class InputMessageActivity : BaseActivity() {
         dataManager.getUser(userId!!)
                 .bindToLifecycle(this)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe ({ user -> to.text = "To: ${user.name}" }, { e -> e.printStackTrace() })
+                .subscribe ({ user -> to.text = user.name }, { e -> e.printStackTrace() })
+
+        priorityGreen.onClick {
+            to.backgroundResource = R.color.green
+            animateRevealShow(to)
+        }
+
+        priorityYellow.onClick {
+            to.backgroundResource = R.color.yellow
+            animateRevealShow(to)
+        }
+
+        priorityOrange.onClick {
+            to.backgroundResource = R.color.orange
+            animateRevealShow(to)
+        }
+
+        priorityRed.onClick {
+            to.backgroundResource = R.color.red
+            animateRevealShow(to)
+        }
+    }
+
+    private fun animateRevealShow(viewRoot: View) {
+        val cx = (viewRoot.left + viewRoot.right) / 2
+        val cy = (viewRoot.top + viewRoot.bottom) / 2
+        val finalRadius = Math.max(viewRoot.width, viewRoot.height).toFloat()
+
+        val anim = ViewAnimationUtils.createCircularReveal(viewRoot, cx, cy, 0f, finalRadius)
+        viewRoot.visibility = View.VISIBLE
+        anim.duration = 300
+        anim.interpolator = AccelerateInterpolator()
+        anim.start()
     }
 }

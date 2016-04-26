@@ -16,7 +16,7 @@ import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration
 import kotlinx.android.synthetic.main.fragment_recycler.*
 import javax.inject.Inject
 
-class NotificationsFragment : BaseFragment() {
+class FeedFragment : BaseFragment() {
 
     @Inject lateinit var dataManager: DataManager
     @Inject lateinit var socialManager: SocialManager
@@ -38,7 +38,7 @@ class NotificationsFragment : BaseFragment() {
     private fun initList() {
         recycler.layoutManager = LinearLayoutManager(context)
         recycler.setHasFixedSize(true)
-        val adapter = RemindersAdapter(dataManager.getMyNotificationsQuery(socialManager.getMyId()))
+        val adapter = RemindersAdapter(dataManager.getMyRemindersQuery(socialManager.getMyId()))
         recycler.adapter = adapter
         recycler.addItemDecoration(
                 HorizontalDividerItemDecoration.Builder(context)

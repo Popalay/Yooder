@@ -1,16 +1,17 @@
 package com.popalay.yooder.activities
 
 import android.os.Bundle
+import android.support.v4.view.ViewPager
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.bumptech.glide.Glide
-import com.firebase.client.Firebase
 import com.popalay.yooder.Application
 import com.popalay.yooder.R
+import com.popalay.yooder.fragments.FeedFragment
 import com.popalay.yooder.fragments.NotificationsFragment
+import com.popalay.yooder.managers.DataManager
 import com.popalay.yooder.managers.SocialManager
-import com.popalay.yooder.models.User
-import com.soikonomakis.rxfirebase.RxFirebase
+import com.popalay.yooder.widgets.PagerAdapter
 import com.trello.rxlifecycle.kotlin.bindToLifecycle
 import com.vk.sdk.VKSdk
 import com.yalantis.guillotine.animation.GuillotineAnimation
@@ -23,13 +24,12 @@ import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.newTask
 import org.jetbrains.anko.onClick
 import rx.android.schedulers.AndroidSchedulers
-import rx.schedulers.Schedulers
 import javax.inject.Inject
 
 class MainActivity : BaseActivity() {
 
-    @Inject lateinit var ref: Firebase
     @Inject lateinit var socialManager: SocialManager
+    @Inject lateinit var dataManager: DataManager
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,13 +54,26 @@ class MainActivity : BaseActivity() {
         val provider = bottomNavigation.badgeProvider;
         provider.show(R.id.notifications);
 
+        var viewPagerAdapter = PagerAdapter(supportFragmentManager)
+        viewPagerAdapter.addFrag(FeedFragment())
+        viewPagerAdapter.addFrag(FeedFragment())
+        viewPagerAdapter.addFrag(NotificationsFragment())
+        pager.adapter = viewPagerAdapter
+        pager.currentItem = 1
+        pager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+            override fun onPageScrollStateChanged(state: Int) {
+            }
+
+            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+            }
+
+            override fun onPageSelected(position: Int) {
+                bottomNavigation.setSelectedIndex(position, true)
+            }
+        })
         bottomNavigation.setOnMenuItemClickListener(object : BottomNavigation.OnMenuItemSelectionListener {
             override fun onMenuItemSelect(p0: Int, p1: Int) {
-                when (p0) {
-                    R.id.notifications ->
-                        supportFragmentManager.beginTransaction().replace(R.id.container, NotificationsFragment(), NotificationsFragment::class.java.simpleName)
-                                .commitAllowingStateLoss()
-                }
+                pager.setCurrentItem(p1, true)
             }
 
             override fun onMenuItemReselect(p0: Int, p1: Int) {
@@ -87,19 +100,13 @@ class MainActivity : BaseActivity() {
     }
 
     private fun init() {
-        //todo
-        RxFirebase.getInstance().observeSingleValue(ref.child("users").child(socialManager.getMyId()))
+        dataManager.getUser(socialManager.getMyId())
                 .bindToLifecycle(this)
-                .subscribeOn(Schedulers.io())
-                .map { dataSnapshot ->
-                    dataSnapshot.getValue(User::class.java)
-                }.observeOn(AndroidSchedulers.mainThread())
-                .subscribe ({ user ->
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe { user ->
                     Glide.with(this@MainActivity).load(user.photo).bitmapTransform(CropCircleTransformation(this@MainActivity)).into(avatar)
                     name.text = user.name
-                }, { error ->
-                    error.printStackTrace()
-                })
+                }
     }
 
     private fun navigateToAuth() {

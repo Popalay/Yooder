@@ -4,6 +4,7 @@ import com.popalay.yooder.activities.AuthActivity
 import com.popalay.yooder.activities.ChooseFriendActivity
 import com.popalay.yooder.activities.InputMessageActivity
 import com.popalay.yooder.activities.MainActivity
+import com.popalay.yooder.fragments.FeedFragment
 import com.popalay.yooder.fragments.NotificationsFragment
 import com.popalay.yooder.lists.RemindersAdapter
 import dagger.Component
@@ -22,6 +23,8 @@ interface  AppComponent {
     fun inject(activity: InputMessageActivity)
 
     fun inject(adapter: RemindersAdapter)
+
+    fun inject(fragment: FeedFragment)
 
     fun inject(fragment: NotificationsFragment)
 }

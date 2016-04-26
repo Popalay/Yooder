@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/primary"
     android:orientation="vertical">
 
     <android.support.v7.widget.Toolbar
@@ -13,31 +13,35 @@
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        app:cardUseCompatPadding="true">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/background"
-            android:padding="16dp">
+            android:background="@color/card">
 
             <TextView
                 android:id="@+id/to"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/accent"
+                android:background="@color/card"
+                android:elevation="4dp"
+                android:gravity="center"
+                android:padding="16dp"
                 android:textSize="18sp"
-                tools:text="To: Denis Nikiforov" />
+                android:textStyle="bold"
+                tools:text="Denis Nikiforov" />
 
             <EditText
                 android:id="@+id/message"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
                 android:layout_below="@id/to"
-                android:layout_marginTop="8dp"
                 android:background="@null"
                 android:gravity="top"
                 android:hint="Your message"
+                android:padding="16dp"
                 android:textColor="@color/text" />
 
             <TextView
@@ -46,33 +50,36 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/message"
                 android:layout_centerHorizontal="true"
-                android:layout_margin="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
                 android:text="Priority"
-                android:textColor="@color/primary" />
+                android:textColor="@color/text" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/divider"
                 android:layout_below="@id/message"
-                android:layout_marginTop="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
                 android:layout_toStartOf="@id/hintPriority"
-                android:background="@color/primary" />
+                android:background="@color/text" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/divider"
                 android:layout_below="@id/message"
-                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginTop="8dp"
                 android:layout_toEndOf="@id/hintPriority"
-                android:background="@color/primary" />
+                android:background="@color/text" />
 
             <RadioGroup
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/hintPriority"
-                android:background="@color/background"
                 android:gravity="center"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:padding="16dp">
 
                 <ImageButton
                     android:id="@+id/priorityGreen"

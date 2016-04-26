@@ -6,55 +6,32 @@
     android:layout_height="wrap_content"
     android:clickable="true"
     android:foreground="?android:attr/selectableItemBackground"
-    app:cardUseCompatPadding="true">
+    app:cardCornerRadius="0dp">
 
-    <RelativeLayout
+    <com.ramotion.foldingcell.FoldingCell android:id="@+id/folding_cell"
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:background="@color/selected"
-        android:padding="16dp">
+        android:layout_height="wrap_content">
 
-        <ImageView
-            android:id="@+id/photo"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="16dp"
-            tools:background="@color/white" />
-
-        <TextView
-            android:id="@+id/name"
-            android:layout_width="wrap_content"
+        <FrameLayout
+            android:id="@+id/cell_content_view"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_toEndOf="@id/photo"
-            android:layout_alignTop="@id/photo"
-            android:layout_marginBottom="8dp"
-            tools:text="Denis Nikiforov" />
+            android:background="@color/card"
+            android:padding="16dp"
+            android:visibility="gone">
 
-        <TextView
-            android:id="@+id/message"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toEndOf="@id/photo"
-            android:layout_below="@id/name"
-            tools:text="You mst buy a milk" />
+            <TextView
+                android:id="@+id/message"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:gravity="center" />
+        </FrameLayout>
 
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@null"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:src="@drawable/expand"/>
+        <include
+            android:id="@+id/cell_title_view"
+            layout="@layout/view_remind_front" />
 
-        <ImageView
-            android:id="@+id/prior"
-            android:layout_width="10dp"
-            android:layout_height="10dp"
-            android:backgroundTint="@color/accent"
-            android:layout_alignParentEnd="true"
-            android:layout_alignTop="@id/name"
-            android:background="@drawable/circle"/>
+    </com.ramotion.foldingcell.FoldingCell>
 
-    </RelativeLayout>
 </android.support.v7.widget.CardView>

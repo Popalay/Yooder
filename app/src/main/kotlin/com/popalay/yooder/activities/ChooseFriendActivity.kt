@@ -1,6 +1,5 @@
 package com.popalay.yooder.activities
 
-import android.graphics.Color
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.view.MenuItem
@@ -11,7 +10,6 @@ import com.popalay.yooder.managers.DataManager
 import com.popalay.yooder.managers.SocialManager
 import com.popalay.yooder.widgets.setOnItemClickListener
 import com.trello.rxlifecycle.kotlin.bindToLifecycle
-import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration
 import kotlinx.android.synthetic.main.activity_choose_friend.*
 import rx.android.schedulers.AndroidSchedulers
 import javax.inject.Inject
@@ -52,13 +50,6 @@ class ChooseFriendActivity : BaseActivity() {
         recycler.setHasFixedSize(true)
         val adapter = FriendsAdapter()
         recycler.adapter = adapter
-        recycler.addItemDecoration(
-                HorizontalDividerItemDecoration.Builder(this)
-                        .color(Color.WHITE)
-                        .sizeResId(R.dimen.divider)
-                        .colorResId(R.color.background)
-                        .marginResId(R.dimen.divider_margin_left, R.dimen.divider_margin_right)
-                        .build());
         recycler.setOnItemClickListener { position ->
             logger.info(position.toString())
             InputMessageActivity.open(this, adapter.items[position].id)

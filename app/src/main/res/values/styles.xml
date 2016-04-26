@@ -47,15 +47,12 @@
         <item name="android:paddingTop">8dp</item>
         <item name="android:paddingBottom">8dp</item>
         <item name="android:layout_gravity">center</item>
-
         <item name="android:drawablePadding">16dp</item>>
-        <item name="android:textColor">@color/text</item>
     </style>
 
     <style name="Toolbar">
-        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_height">@dimen/actionbarSize</item>
         <item name="android:layout_width">match_parent</item>
-        <item name="android:minHeight">?attr/actionBarSize</item>
         <item name="android:windowNoTitle">true</item>
         <item name="android:background">@color/primary</item>
     </style>

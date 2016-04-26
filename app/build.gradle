@@ -74,6 +74,7 @@ dependencies {
     compile 'com.simplecityapps:recyclerview-fastscroll:1.0.6'
     compile 'com.github.Yalantis:GuillotineMenu-Android:v1.0'
     compile 'com.yqritc:recyclerview-flexibledivider:1.2.9'
+    compile 'com.ramotion.foldingcell:folding-cell:1.0.0'
 }
 kapt {
     generateStubs = true

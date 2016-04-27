@@ -13,6 +13,7 @@ import com.popalay.yooder.models.Remind
 import jp.wasabeef.glide.transformations.CropCircleTransformation
 import kotlinx.android.synthetic.main.card_remind.view.*
 import kotlinx.android.synthetic.main.view_remind_front.view.*
+import org.jetbrains.anko.backgroundResource
 import org.jetbrains.anko.onClick
 import rx.android.schedulers.AndroidSchedulers
 import javax.inject.Inject
@@ -44,6 +45,14 @@ class RemindersAdapter(query: Query) : BaseFirebaseAdapter<Remind>(query, Remind
             folding_cell.initialize(500, context.resources.getColor(R.color.primaryDark), 0);
             folding_cell.onClick {
                 folding_cell.toggle(false)
+            }
+            val priority = items[position].priority
+            when (priority) {
+                1 -> cell_title_view.backgroundResource = R.color.green
+                2 -> cell_title_view.backgroundResource = R.color.yellow
+                3 -> cell_title_view.backgroundResource = R.color.orange
+                4 -> cell_title_view.backgroundResource = R.color.red
+                else -> cell_title_view.backgroundResource = R.color.card
             }
         }
     }

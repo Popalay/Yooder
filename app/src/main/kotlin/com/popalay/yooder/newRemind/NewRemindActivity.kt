@@ -1,38 +1,52 @@
-package com.popalay.yooder.activities
+package com.popalay.yooder.newRemind
 
 import android.content.Context
 import android.os.Bundle
-import android.text.TextUtils
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewAnimationUtils
 import android.view.animation.AccelerateInterpolator
+import com.arellomobile.mvp.presenter.InjectPresenter
 import com.popalay.yooder.Application
 import com.popalay.yooder.R
-import com.popalay.yooder.managers.DataManager
-import com.popalay.yooder.managers.SocialManager
-import com.popalay.yooder.models.Remind
-import com.trello.rxlifecycle.kotlin.bindToLifecycle
+import com.popalay.yooder.activities.BaseActivity
+import com.popalay.yooder.models.User
 import kotlinx.android.synthetic.main.activity_input_message.*
 import org.jetbrains.anko.*
-import rx.android.schedulers.AndroidSchedulers
-import javax.inject.Inject
 
 
-class InputMessageActivity : BaseActivity() {
+class NewRemindActivity : BaseActivity(), NewRemindView {
 
-    @Inject lateinit var dataManager: DataManager
-    @Inject lateinit var socialManager: SocialManager
+    @InjectPresenter lateinit var presenter: NewRemindPresenter
 
     companion object {
+
         val EXTRA_USER_ID = "user_id"
 
         fun open(context: Context, userId: String) {
             with(context) {
-                this.startActivity(intentFor<InputMessageActivity>(EXTRA_USER_ID to userId).newTask().clearTop())
+                this.startActivity(intentFor<NewRemindActivity>(EXTRA_USER_ID to userId).newTask().clearTop())
             }
         }
+    }
+
+    private var priority: Int = 0
+
+    override fun showError(error: String) {
+        message.error = error
+    }
+
+    override fun hideError() {
+        message.error = null
+    }
+
+    override fun onRemindSaved() {
+        finish()
+    }
+
+    override fun attachUser(user: User) {
+        to.text = user.name
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -46,13 +60,9 @@ class InputMessageActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         Application.graph.inject(this)
         setContentView(R.layout.activity_input_message)
-        init()
         initUI()
     }
 
-    private fun init() {
-
-    }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {
@@ -61,30 +71,15 @@ class InputMessageActivity : BaseActivity() {
                 return true
             }
             R.id.accept -> {
-                if (saveRemind()) {
-                    finish()
-                }
+                saveRemind()
                 return true
             }
             else -> return super.onOptionsItemSelected(item)
         }
     }
 
-    private fun saveRemind(): Boolean {
-        var isCorrect = true
-        message.error = if (TextUtils.isEmpty(message.text)) {
-            isCorrect = false
-            "Put your message"
-        } else {
-            null
-        }
-        if (isCorrect) {
-            val message = message.text.toString().trim()
-            val from = socialManager.getMyId()
-            val to = userId!!
-            dataManager.saveRemind(Remind(message, from, to))
-        }
-        return isCorrect
+    private fun saveRemind() {
+        presenter.saveRemind(userId!!, message.text.toString().trim(), priority)
     }
 
     private fun initUI() {
@@ -92,29 +87,32 @@ class InputMessageActivity : BaseActivity() {
         supportActionBar?.title = "Input message"
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         userId = intent?.extras?.getString(EXTRA_USER_ID)
-        dataManager.getUser(userId!!)
-                .bindToLifecycle(this)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe ({ user -> to.text = user.name }, { e -> e.printStackTrace() })
+        if (userId != null) {
+            presenter.getUser(userId!!)
+        }
 
         priorityGreen.onClick {
             to.backgroundResource = R.color.green
             animateRevealShow(to)
+            priority = 1
         }
 
         priorityYellow.onClick {
             to.backgroundResource = R.color.yellow
             animateRevealShow(to)
+            priority = 2
         }
 
         priorityOrange.onClick {
             to.backgroundResource = R.color.orange
             animateRevealShow(to)
+            priority = 3
         }
 
         priorityRed.onClick {
             to.backgroundResource = R.color.red
             animateRevealShow(to)
+            priority = 4
         }
     }
 

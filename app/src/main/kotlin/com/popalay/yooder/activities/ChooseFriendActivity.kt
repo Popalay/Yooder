@@ -8,6 +8,7 @@ import com.popalay.yooder.R
 import com.popalay.yooder.lists.FriendsAdapter
 import com.popalay.yooder.managers.DataManager
 import com.popalay.yooder.managers.SocialManager
+import com.popalay.yooder.newRemind.NewRemindActivity
 import com.popalay.yooder.widgets.setOnItemClickListener
 import com.trello.rxlifecycle.kotlin.bindToLifecycle
 import kotlinx.android.synthetic.main.activity_choose_friend.*
@@ -52,7 +53,7 @@ class ChooseFriendActivity : BaseActivity() {
         recycler.adapter = adapter
         recycler.setOnItemClickListener { position ->
             logger.info(position.toString())
-            InputMessageActivity.open(this, adapter.items[position].id)
+            NewRemindActivity.open(this, adapter.items[position].id)
         }
         dataManager.getFriends(socialManager.getMyId())
                 .bindToLifecycle(this)

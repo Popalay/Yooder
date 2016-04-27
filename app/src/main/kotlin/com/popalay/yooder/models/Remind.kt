@@ -11,11 +11,13 @@ class Remind() : Comparable<Remind> {
     var message: String = ""
     var from: String = ""
     var to: String = ""
+    var priority:Int = 0
     var time: Long = 0L
 
-    constructor(message: String, from: String, to: String) : this() {
+    constructor(message: String, from: String, to: String, priority:Int) : this() {
         this.message = message
         this.from = from
         this.to = to
+        this.priority = priority
     }
 }

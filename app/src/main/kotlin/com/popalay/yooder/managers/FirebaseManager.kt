@@ -55,6 +55,7 @@ class FirebaseManager(val ref: Firebase) : DataManager {
         remind.id = id
         remind.time = System.currentTimeMillis()
         ref.child("reminders").child(remind.id).setValue(remind)
+        ref.child("reminders").child(remind.id).setPriority(0 - remind.time)
     }
 
     override fun getMyRemindersQuery(myId: String) = ref.child("reminders").orderByChild("from").equalTo(myId)

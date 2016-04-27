@@ -75,6 +75,11 @@ dependencies {
     compile 'com.github.Yalantis:GuillotineMenu-Android:v1.0'
     compile 'com.yqritc:recyclerview-flexibledivider:1.2.9'
     compile 'com.ramotion.foldingcell:folding-cell:1.0.0'
+
+    //Moxy MVP
+    compile 'com.arello-mobile:moxy:0.4.3'
+    compile 'com.arello-mobile:moxy-android:0.4.3'
+    kapt 'com.arello-mobile:moxy-compiler:0.4.3'
 }
 kapt {
     generateStubs = true

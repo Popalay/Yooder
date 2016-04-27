@@ -6,7 +6,7 @@
     <dimen name="large_text_size">22sp</dimen>
     <dimen name="divider">1dp</dimen>
     <dimen name="divider_list">2dp</dimen>
-    <dimen name="divider_margin_left">82dp</dimen>
+    <dimen name="divider_margin_left">0dp</dimen>
     <dimen name="divider_margin_right">0dp</dimen>
     <dimen name="actionbarSize">60dp</dimen>
 </resources>

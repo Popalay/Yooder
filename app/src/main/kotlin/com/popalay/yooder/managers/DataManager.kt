@@ -8,9 +8,9 @@ import rx.Observable
 interface DataManager {
     fun saveUser(user: User)
     fun saveFriend(user: User, myId: String)
-    open fun getFriends(myId: String): Observable<List<User>>
-    open fun getUser(userId: String): Observable<User>
-    open fun saveRemind(remind: Remind)
-    open fun getMyRemindersQuery(myId: String): Query
-    open fun getMyNotificationsQuery(myId: String): Query
+    fun getFriends(myId: String): Observable<List<User>>
+    fun getUser(userId: String): Observable<User>
+    fun saveRemind(remind: Remind)
+    fun getMyRemindersQuery(myId: String): Query
+    fun getMyNotificationsQuery(myId: String): Query
 }

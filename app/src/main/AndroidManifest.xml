@@ -22,8 +22,8 @@
             android:name=".activities.AuthActivity"
             android:label="@string/activity.auth"
             android:theme="@style/AuthTheme" />
-        <activity android:name=".activities.ChooseFriendActivity" />
-        <activity android:name=".newRemind.NewRemindActivity" />
+        <activity android:name=".mvp.choosefriend.ChooseFriendActivity" />
+        <activity android:name=".mvp.createremind.CreateRemindActivity" />
         <activity
             android:name="com.vk.sdk.VKServiceActivity"
             android:label="ServiceActivity"

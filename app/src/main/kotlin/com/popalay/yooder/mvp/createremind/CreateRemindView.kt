@@ -1,4 +1,4 @@
-package com.popalay.yooder.newRemind
+package com.popalay.yooder.mvp.createremind
 
 import com.arellomobile.mvp.MvpView
 import com.arellomobile.mvp.viewstate.strategy.AddToEndSingleStrategy
@@ -6,7 +6,7 @@ import com.arellomobile.mvp.viewstate.strategy.StateStrategyType
 import com.popalay.yooder.models.User
 
 @StateStrategyType(value = AddToEndSingleStrategy::class)
-interface NewRemindView : MvpView {
+interface CreateRemindView : MvpView {
 
     fun showError(error: String)
 

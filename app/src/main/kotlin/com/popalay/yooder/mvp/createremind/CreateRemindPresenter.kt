@@ -1,4 +1,4 @@
-package com.popalay.yooder.newRemind
+package com.popalay.yooder.mvp.createremind
 
 import android.text.TextUtils
 import com.arellomobile.mvp.InjectViewState
@@ -11,7 +11,7 @@ import rx.android.schedulers.AndroidSchedulers
 import javax.inject.Inject
 
 @InjectViewState
-class NewRemindPresenter : MvpPresenter<NewRemindView>() {
+class CreateRemindPresenter : MvpPresenter<CreateRemindView>() {
 
     @Inject lateinit var dataManager: DataManager
     @Inject lateinit var socialManager: SocialManager

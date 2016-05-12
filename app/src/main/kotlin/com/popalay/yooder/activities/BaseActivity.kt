@@ -4,11 +4,8 @@ import android.content.Context
 import android.view.MotionEvent
 import android.view.inputmethod.InputMethodManager
 import com.popalay.yooder.common.MvpAppCompatActivity
-import java.util.logging.Logger
 
 abstract class BaseActivity : MvpAppCompatActivity() {
-
-    val logger = Logger.getLogger(this.javaClass.simpleName)
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         var view = this.currentFocus;

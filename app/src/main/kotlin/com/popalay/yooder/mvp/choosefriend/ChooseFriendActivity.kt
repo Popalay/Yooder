@@ -1,37 +1,39 @@
-package com.popalay.yooder.activities
+package com.popalay.yooder.mvp.choosefriend
 
+import android.content.Context
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.view.MenuItem
-import com.popalay.yooder.Application
+import com.arellomobile.mvp.presenter.InjectPresenter
+import com.pawegio.kandroid.startActivity
 import com.popalay.yooder.R
+import com.popalay.yooder.activities.BaseActivity
 import com.popalay.yooder.lists.FriendsAdapter
-import com.popalay.yooder.managers.DataManager
-import com.popalay.yooder.managers.SocialManager
-import com.popalay.yooder.newRemind.NewRemindActivity
+import com.popalay.yooder.models.User
 import com.popalay.yooder.widgets.setOnItemClickListener
-import com.trello.rxlifecycle.kotlin.bindToLifecycle
 import kotlinx.android.synthetic.main.activity_choose_friend.*
-import rx.android.schedulers.AndroidSchedulers
-import javax.inject.Inject
 
+class ChooseFriendActivity : BaseActivity(), ChooseFriendView {
 
-class ChooseFriendActivity : BaseActivity() {
+    @InjectPresenter lateinit var presenter1: ChooseFriendPresenter
 
-    @Inject lateinit var dataManager: DataManager
-    @Inject lateinit var socialManager: SocialManager
+    lateinit var adapter: FriendsAdapter
+
+    companion object {
+        fun open(context: Context) {
+            context.startActivity<ChooseFriendActivity>()
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_choose_friend)
-        Application.graph.inject(this)
         initUI()
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {
             android.R.id.home -> {
-                finish()
                 return true
             }
             else -> return super.onOptionsItemSelected(item)
@@ -45,23 +47,22 @@ class ChooseFriendActivity : BaseActivity() {
         initList()
     }
 
-
     private fun initList() {
         recycler.layoutManager = LinearLayoutManager(this)
         recycler.setHasFixedSize(true)
-        val adapter = FriendsAdapter()
+        adapter = FriendsAdapter()
         recycler.adapter = adapter
         recycler.setOnItemClickListener { position ->
-            logger.info(position.toString())
-            NewRemindActivity.open(this, adapter.items[position].id)
+            presenter1.friendChosen(this, adapter.items[position])
         }
-        dataManager.getFriends(socialManager.getMyId())
-                .bindToLifecycle(this)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe {
-                    adapter.items = it
-                    adapter.notifyDataSetChanged()
-                }
     }
 
+    override fun attachFriends(friends: List<User>) {
+        adapter.items = friends
+        adapter.notifyDataSetChanged()
+    }
+
+    override fun onRemindCreated() {
+
+    }
 }

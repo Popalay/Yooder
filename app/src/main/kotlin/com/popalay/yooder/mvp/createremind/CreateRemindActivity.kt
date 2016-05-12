@@ -1,4 +1,4 @@
-package com.popalay.yooder.newRemind
+package com.popalay.yooder.mvp.createremind
 
 import android.content.Context
 import android.os.Bundle
@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewAnimationUtils
 import android.view.animation.AccelerateInterpolator
 import com.arellomobile.mvp.presenter.InjectPresenter
-import com.popalay.yooder.Application
 import com.popalay.yooder.R
 import com.popalay.yooder.activities.BaseActivity
 import com.popalay.yooder.models.User
@@ -16,9 +15,9 @@ import kotlinx.android.synthetic.main.activity_input_message.*
 import org.jetbrains.anko.*
 
 
-class NewRemindActivity : BaseActivity(), NewRemindView {
+class CreateRemindActivity : BaseActivity(), CreateRemindView {
 
-    @InjectPresenter lateinit var presenter: NewRemindPresenter
+    @InjectPresenter lateinit var presenter: CreateRemindPresenter
 
     companion object {
 
@@ -26,7 +25,7 @@ class NewRemindActivity : BaseActivity(), NewRemindView {
 
         fun open(context: Context, userId: String) {
             with(context) {
-                this.startActivity(intentFor<NewRemindActivity>(EXTRA_USER_ID to userId).newTask().clearTop())
+                this.startActivity(intentFor<CreateRemindActivity>(EXTRA_USER_ID to userId).newTask().clearTop())
             }
         }
     }
@@ -58,7 +57,6 @@ class NewRemindActivity : BaseActivity(), NewRemindView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Application.graph.inject(this)
         setContentView(R.layout.activity_input_message)
         initUI()
     }

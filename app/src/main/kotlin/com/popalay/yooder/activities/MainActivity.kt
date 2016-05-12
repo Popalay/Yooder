@@ -11,6 +11,7 @@ import com.popalay.yooder.fragments.FeedFragment
 import com.popalay.yooder.fragments.NotificationsFragment
 import com.popalay.yooder.managers.DataManager
 import com.popalay.yooder.managers.SocialManager
+import com.popalay.yooder.mvp.choosefriend.ChooseFriendActivity
 import com.popalay.yooder.widgets.PagerAdapter
 import com.trello.rxlifecycle.kotlin.bindToLifecycle
 import com.vk.sdk.VKSdk
@@ -91,7 +92,7 @@ class MainActivity : BaseActivity() {
         addReminder.onClick {
             animationMenu.close()
             //add
-            startActivity(intentFor<ChooseFriendActivity>().newTask().clearTop())
+            ChooseFriendActivity.open(this)
         }
         logout.onClick {
             animationMenu.close()
@@ -111,7 +112,6 @@ class MainActivity : BaseActivity() {
 
     private fun navigateToAuth() {
         // Launch the login activity
-        logger.info("navigateToAuth")
         startActivity(intentFor<AuthActivity>().newTask().clearTop())
         finish()
     }

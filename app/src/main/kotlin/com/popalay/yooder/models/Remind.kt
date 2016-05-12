@@ -1,23 +1,14 @@
 package com.popalay.yooder.models
 
-class Remind() : Comparable<Remind> {
+import kotlin.properties.Delegates
+
+class Remind(var message: String = "", var from: String = "", var to: String = "", var priority: Int = 0) : Comparable<Remind> {
+
+    var id: String by Delegates.notNull<String>()
+    var time: Long by Delegates.notNull<Long>()
 
     override fun compareTo(other: Remind): Int {
         var res = time - other.time
         return if (res > 0) 1 else if (res == 0L) 0 else -1
-    }
-
-    var id: String = ""
-    var message: String = ""
-    var from: String = ""
-    var to: String = ""
-    var priority:Int = 0
-    var time: Long = 0L
-
-    constructor(message: String, from: String, to: String, priority:Int) : this() {
-        this.message = message
-        this.from = from
-        this.to = to
-        this.priority = priority
     }
 }

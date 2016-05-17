@@ -2,6 +2,7 @@ package com.popalay.yooder.di
 
 import com.popalay.yooder.fragments.FeedFragment
 import com.popalay.yooder.fragments.NotificationsFragment
+import com.popalay.yooder.lists.NotificationsAdapter
 import com.popalay.yooder.lists.RemindersAdapter
 import com.popalay.yooder.mvp.auth.AuthPresenter
 import com.popalay.yooder.mvp.choosefriend.ChooseFriendPresenter
@@ -15,6 +16,8 @@ import javax.inject.Singleton
 interface AppComponent {
 
     fun inject(adapter: RemindersAdapter)
+
+    fun inject(adapter: NotificationsAdapter)
 
     fun inject(fragment: FeedFragment)
 

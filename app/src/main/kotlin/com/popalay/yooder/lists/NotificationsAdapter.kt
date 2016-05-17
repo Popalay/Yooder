@@ -19,7 +19,7 @@ import rx.android.schedulers.AndroidSchedulers
 import javax.inject.Inject
 
 
-class RemindersAdapter(query: Query) : BaseFirebaseAdapter<Remind>(query, Remind::class.java) {
+class NotificationsAdapter(query: Query) : BaseFirebaseAdapter<Remind>(query, Remind::class.java) {
 
     @Inject lateinit var dataManager: DataManager
 
@@ -37,7 +37,7 @@ class RemindersAdapter(query: Query) : BaseFirebaseAdapter<Remind>(query, Remind
             time.text = items[position].time.toRelatedDate()
             message.text = items[position].message
             message_full.text = items[position].message
-            dataManager.getUser(items[position].to)
+            dataManager.getUser(items[position].from)
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe { user ->
                         name.text = user.name

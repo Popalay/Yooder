@@ -59,5 +59,6 @@ class FirebaseManager(val ref: Firebase) : DataManager {
     }
 
     override fun getMyRemindersQuery(myId: String) = ref.child("reminders").orderByChild("from").equalTo(myId)
-    override fun getMyNotificationsQuery(myId: String) = ref.child("reminders").orderByChild("to").equalTo(myId)
+
+    override fun getMyNotificationsQuery(myId: String) = ref.child("reminders").orderByChild("to").equalTo(myId.toDouble())
 }

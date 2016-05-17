@@ -9,4 +9,9 @@
     <dimen name="divider_margin_left">0dp</dimen>
     <dimen name="divider_margin_right">0dp</dimen>
     <dimen name="actionbarSize">60dp</dimen>
+
+
+    <dimen name="padding_0.5x">4dp</dimen>
+    <dimen name="padding_1x">8dp</dimen>
+    <dimen name="padding_2x">16dp</dimen>
 </resources>

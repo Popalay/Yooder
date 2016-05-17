@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="2dp"
@@ -12,25 +13,39 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <FrameLayout
+        <LinearLayout
             android:id="@+id/cell_content_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/card"
-            android:padding="16dp"
-            android:visibility="gone">
+            android:orientation="vertical"
+            android:visibility="gone"
+            tools:visibility="visible">
 
             <TextView
-                android:id="@+id/message"
+                android:id="@+id/name"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:gravity="center" />
-        </FrameLayout>
+                android:layout_height="41dp"
+                android:elevation="4dp"
+                android:gravity="center_vertical"
+                android:padding="@dimen/padding_1x"
+                tools:background="@color/accent"
+                tools:text="Denis Nikiforov" />
+
+            <TextView
+                android:id="@+id/message_full"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="41dp"
+                android:padding="@dimen/padding_1x"
+                tools:text="dsfsdfsdddddddddddddddddddd" />
+
+        </LinearLayout>
 
         <include
-            android:foreground="?attr/selectableItemBackground"
             android:id="@+id/cell_title_view"
-            layout="@layout/view_remind_front" />
+            layout="@layout/view_remind_front"
+            android:foreground="?attr/selectableItemBackground" />
 
     </com.ramotion.foldingcell.FoldingCell>
 

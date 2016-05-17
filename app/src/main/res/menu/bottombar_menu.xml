@@ -1,22 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@android:color/black"
-    app:bbn_badgeColor="@color/accent">
+    android:background="@android:color/black">
     <item
         android:id="@+id/archive"
         android:color="@color/fiolet"
         android:icon="@drawable/archive"
-        android:title="@string/archive" />
+        android:title="" />
     <item
         android:id="@+id/feed"
         android:checked="true"
         android:color="@color/primary"
         android:icon="@drawable/feed"
-        android:title="@string/feed" />
+        android:title="" />
     <item
         android:id="@+id/notifications"
         android:color="@color/blue"
         android:icon="@drawable/notifications"
-        android:title="@string/notifications" />
+        android:title="" />
 </menu>

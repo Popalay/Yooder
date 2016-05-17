@@ -1,6 +1,7 @@
 package com.popalay.yooder.di
 
 import android.app.Application
+import android.content.Context
 import com.firebase.client.Firebase
 import com.firebase.client.Logger
 import com.popalay.yooder.managers.DataManager
@@ -18,16 +19,18 @@ class AppModule(private val application: Application) {
 
     @Provides
     @Singleton
-    fun provideFirebase(): Firebase {
+    fun provideApplicationContext(): Context = application
+
+    @Provides
+    @Singleton
+    fun provideFirebase(context: Context): Firebase {
+        Firebase.setAndroidContext(context)
+        Firebase.getDefaultConfig().isPersistenceEnabled = true
         Firebase.getDefaultConfig().setLogLevel(Logger.Level.WARN)
         val ref = Firebase("https://yooder.firebaseio.com/")
         ref.keepSynced(true)
         return ref
     }
-
-    @Provides
-    @Singleton
-    fun provideApplicationContext() = application
 
     @Provides
     @Singleton

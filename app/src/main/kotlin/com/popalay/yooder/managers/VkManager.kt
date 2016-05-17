@@ -12,7 +12,7 @@ import com.vk.sdk.api.model.VKApiUser
 import com.vk.sdk.api.model.VKList
 import java.util.*
 
-class VkManager : SocialManager {
+class VkManager() : SocialManager {
 
     override fun isLogged() = VKSdk.isLoggedIn()
 

@@ -14,8 +14,14 @@ import java.util.*
 
 class VkManager : SocialManager {
 
+    override fun isLogged() = VKSdk.isLoggedIn()
+
     override fun login(activity: Activity) {
         VKSdk.login(activity, VKScope.FRIENDS, VKScope.PHOTOS)
+    }
+
+    override fun logout() {
+        VKSdk.logout()
     }
 
     override fun handleLogin(requestCode: Int, resultCode: Int, data: Intent?, callback: (User?, String?) -> Unit): Boolean {

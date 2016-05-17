@@ -1,22 +1,19 @@
-package com.popalay.yooder.activities
+package com.popalay.yooder.mvp.main
 
 import android.os.Bundle
 import android.support.v4.view.ViewPager
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import com.arellomobile.mvp.presenter.InjectPresenter
 import com.bumptech.glide.Glide
-import com.popalay.yooder.Application
 import com.popalay.yooder.R
 import com.popalay.yooder.common.BaseActivity
 import com.popalay.yooder.fragments.FeedFragment
 import com.popalay.yooder.fragments.NotificationsFragment
-import com.popalay.yooder.managers.DataManager
-import com.popalay.yooder.managers.SocialManager
+import com.popalay.yooder.models.User
 import com.popalay.yooder.mvp.auth.AuthActivity
 import com.popalay.yooder.mvp.choosefriend.ChooseFriendActivity
 import com.popalay.yooder.widgets.PagerAdapter
-import com.trello.rxlifecycle.kotlin.bindToLifecycle
-import com.vk.sdk.VKSdk
 import com.yalantis.guillotine.animation.GuillotineAnimation
 import it.sephiroth.android.library.bottomnavigation.BottomNavigation
 import jp.wasabeef.glide.transformations.CropCircleTransformation
@@ -26,26 +23,14 @@ import org.jetbrains.anko.clearTop
 import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.newTask
 import org.jetbrains.anko.onClick
-import rx.android.schedulers.AndroidSchedulers
-import javax.inject.Inject
 
-class MainActivity : BaseActivity() {
-
-    @Inject lateinit var socialManager: SocialManager
-    @Inject lateinit var dataManager: DataManager
-
+class MainActivity : BaseActivity(), MainView {
+    @InjectPresenter lateinit var presenter: MainPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        Application.graph.inject(this)
-        // Get current user
-        if (!VKSdk.isLoggedIn()) {
-            navigateToAuth()
-        } else {
-            initUI()
-            init()
-        }
+        initUI()
     }
 
     private fun initUI() {
@@ -57,7 +42,7 @@ class MainActivity : BaseActivity() {
         val provider = bottomNavigation.badgeProvider;
         provider.show(R.id.notifications);
 
-        var viewPagerAdapter = PagerAdapter(supportFragmentManager)
+        val viewPagerAdapter = PagerAdapter(supportFragmentManager)
         viewPagerAdapter.addFrag(FeedFragment())
         viewPagerAdapter.addFrag(FeedFragment())
         viewPagerAdapter.addFrag(NotificationsFragment())
@@ -71,12 +56,12 @@ class MainActivity : BaseActivity() {
             }
 
             override fun onPageSelected(position: Int) {
-                bottomNavigation.setSelectedIndex(position, true)
+                presenter.selectPage(position)
             }
         })
         bottomNavigation.setOnMenuItemClickListener(object : BottomNavigation.OnMenuItemSelectionListener {
             override fun onMenuItemSelect(p0: Int, p1: Int) {
-                pager.setCurrentItem(p1, true)
+                presenter.selectPage(p1)
             }
 
             override fun onMenuItemReselect(p0: Int, p1: Int) {
@@ -93,33 +78,30 @@ class MainActivity : BaseActivity() {
 
         addReminder.onClick {
             animationMenu.close()
-            //add
-            ChooseFriendActivity.open(this)
+            presenter.addRemind()
         }
         logout.onClick {
             animationMenu.close()
-            logout()
+            presenter.logout()
         }
     }
 
-    private fun init() {
-        dataManager.getUser(socialManager.getMyId())
-                .bindToLifecycle(this)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe { user ->
-                    Glide.with(this@MainActivity).load(user.photo).bitmapTransform(CropCircleTransformation(this@MainActivity)).into(avatar)
-                    name.text = user.name
-                }
+    override fun onReturnCurrentUser(user: User) {
+        Glide.with(this@MainActivity).load(user.photo).bitmapTransform(CropCircleTransformation(this@MainActivity)).into(avatar)
+        name.text = user.name
     }
 
-    private fun navigateToAuth() {
-        // Launch the login activity
+    override fun navigateToAuthScreen() {
         startActivity(intentFor<AuthActivity>().newTask().clearTop())
         finish()
     }
 
-    private fun logout() {
-        VKSdk.logout()
-        navigateToAuth()
+    override fun openChooseFriendScreen() {
+        ChooseFriendActivity.open(this)
+    }
+
+    override fun onPageSelected(position: Int) {
+        bottomNavigation.setSelectedIndex(position, true)
+        pager.setCurrentItem(position, true)
     }
 }

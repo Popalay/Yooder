@@ -7,9 +7,9 @@ import android.support.design.widget.Snackbar
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.pawegio.kandroid.startActivity
 import com.popalay.yooder.R
-import com.popalay.yooder.activities.MainActivity
 import com.popalay.yooder.common.BaseActivity
 import com.popalay.yooder.extensions.snackbar
+import com.popalay.yooder.mvp.main.MainActivity
 import kotlinx.android.synthetic.main.activity_auth.*
 import org.jetbrains.anko.clearTop
 import org.jetbrains.anko.intentFor

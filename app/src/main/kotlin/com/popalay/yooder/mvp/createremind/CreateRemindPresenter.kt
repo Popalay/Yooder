@@ -6,8 +6,11 @@ import com.arellomobile.mvp.MvpPresenter
 import com.popalay.yooder.Application
 import com.popalay.yooder.managers.DataManager
 import com.popalay.yooder.managers.SocialManager
+import com.popalay.yooder.models.Event
+import com.popalay.yooder.models.EventType
 import com.popalay.yooder.models.Remind
 import rx.android.schedulers.AndroidSchedulers
+import rx.subjects.PublishSubject
 import javax.inject.Inject
 
 @InjectViewState
@@ -15,6 +18,7 @@ class CreateRemindPresenter : MvpPresenter<CreateRemindView>() {
 
     @Inject lateinit var dataManager: DataManager
     @Inject lateinit var socialManager: SocialManager
+    @Inject lateinit var eventBus: PublishSubject<Event>
 
     init {
         Application.graph.inject(this)
@@ -37,6 +41,7 @@ class CreateRemindPresenter : MvpPresenter<CreateRemindView>() {
             viewState.hideError()
             dataManager.saveRemind(Remind(message, socialManager.getMyId(), to, priority))
             viewState.onRemindSaved()
+            eventBus.onNext(Event(EventType.REMIND_CREATED))
         }
     }
 

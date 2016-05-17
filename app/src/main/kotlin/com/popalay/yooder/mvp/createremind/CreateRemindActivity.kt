@@ -9,7 +9,7 @@ import android.view.ViewAnimationUtils
 import android.view.animation.AccelerateInterpolator
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.popalay.yooder.R
-import com.popalay.yooder.activities.BaseActivity
+import com.popalay.yooder.common.BaseActivity
 import com.popalay.yooder.models.User
 import kotlinx.android.synthetic.main.activity_input_message.*
 import org.jetbrains.anko.*
@@ -78,6 +78,7 @@ class CreateRemindActivity : BaseActivity(), CreateRemindView {
 
     private fun saveRemind() {
         presenter.saveRemind(userId!!, message.text.toString().trim(), priority)
+        //send event
     }
 
     private fun initUI() {

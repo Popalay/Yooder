@@ -19,7 +19,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.AuthActivity"
+            android:name=".mvp.auth.AuthActivity"
             android:label="@string/activity.auth"
             android:theme="@style/AuthTheme" />
         <activity android:name=".mvp.choosefriend.ChooseFriendActivity" />

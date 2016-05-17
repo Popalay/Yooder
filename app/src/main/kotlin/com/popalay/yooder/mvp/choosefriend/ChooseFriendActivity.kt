@@ -7,7 +7,7 @@ import android.view.MenuItem
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.pawegio.kandroid.startActivity
 import com.popalay.yooder.R
-import com.popalay.yooder.activities.BaseActivity
+import com.popalay.yooder.common.BaseActivity
 import com.popalay.yooder.lists.FriendsAdapter
 import com.popalay.yooder.models.User
 import com.popalay.yooder.widgets.setOnItemClickListener
@@ -15,7 +15,7 @@ import kotlinx.android.synthetic.main.activity_choose_friend.*
 
 class ChooseFriendActivity : BaseActivity(), ChooseFriendView {
 
-    @InjectPresenter lateinit var presenter1: ChooseFriendPresenter
+    @InjectPresenter lateinit var presenter: ChooseFriendPresenter
 
     lateinit var adapter: FriendsAdapter
 
@@ -34,6 +34,7 @@ class ChooseFriendActivity : BaseActivity(), ChooseFriendView {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {
             android.R.id.home -> {
+                finish()
                 return true
             }
             else -> return super.onOptionsItemSelected(item)
@@ -53,7 +54,7 @@ class ChooseFriendActivity : BaseActivity(), ChooseFriendView {
         adapter = FriendsAdapter()
         recycler.adapter = adapter
         recycler.setOnItemClickListener { position ->
-            presenter1.friendChosen(this, adapter.items[position])
+            presenter.friendChosen(this, adapter.items[position])
         }
     }
 
@@ -63,6 +64,6 @@ class ChooseFriendActivity : BaseActivity(), ChooseFriendView {
     }
 
     override fun onRemindCreated() {
-
+        finish()
     }
 }

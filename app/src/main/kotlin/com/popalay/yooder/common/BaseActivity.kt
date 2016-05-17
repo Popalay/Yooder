@@ -1,9 +1,8 @@
-package com.popalay.yooder.activities
+package com.popalay.yooder.common
 
 import android.content.Context
 import android.view.MotionEvent
 import android.view.inputmethod.InputMethodManager
-import com.popalay.yooder.common.MvpAppCompatActivity
 
 abstract class BaseActivity : MvpAppCompatActivity() {
 

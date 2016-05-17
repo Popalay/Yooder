@@ -7,10 +7,12 @@ import android.view.ViewGroup
 import com.bumptech.glide.Glide
 import com.popalay.yooder.Application
 import com.popalay.yooder.R
+import com.popalay.yooder.common.BaseActivity
 import com.popalay.yooder.fragments.FeedFragment
 import com.popalay.yooder.fragments.NotificationsFragment
 import com.popalay.yooder.managers.DataManager
 import com.popalay.yooder.managers.SocialManager
+import com.popalay.yooder.mvp.auth.AuthActivity
 import com.popalay.yooder.mvp.choosefriend.ChooseFriendActivity
 import com.popalay.yooder.widgets.PagerAdapter
 import com.trello.rxlifecycle.kotlin.bindToLifecycle

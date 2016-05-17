@@ -7,8 +7,10 @@ import com.popalay.yooder.managers.DataManager
 import com.popalay.yooder.managers.FirebaseManager
 import com.popalay.yooder.managers.SocialManager
 import com.popalay.yooder.managers.VkManager
+import com.popalay.yooder.models.Event
 import dagger.Module
 import dagger.Provides
+import rx.subjects.PublishSubject
 import javax.inject.Singleton
 
 @Module
@@ -34,4 +36,8 @@ class AppModule(private val application: Application) {
     @Provides
     @Singleton
     fun provideDataManager(ref: Firebase): DataManager = FirebaseManager(ref)
+
+    @Provides
+    @Singleton
+    fun provideEventBus() = PublishSubject.create<Event>()
 }

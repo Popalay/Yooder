@@ -7,9 +7,12 @@ import com.pawegio.kandroid.d
 import com.popalay.yooder.Application
 import com.popalay.yooder.managers.DataManager
 import com.popalay.yooder.managers.SocialManager
+import com.popalay.yooder.models.Event
+import com.popalay.yooder.models.EventType
 import com.popalay.yooder.models.User
 import com.popalay.yooder.mvp.createremind.CreateRemindActivity
 import rx.android.schedulers.AndroidSchedulers
+import rx.subjects.PublishSubject
 import javax.inject.Inject
 
 @InjectViewState
@@ -17,6 +20,7 @@ class ChooseFriendPresenter : MvpPresenter<ChooseFriendView>() {
 
     @Inject lateinit var dataManager: DataManager
     @Inject lateinit var socialManager: SocialManager
+    @Inject lateinit var eventBus: PublishSubject<Event>
 
     init {
         Application.graph.inject(this)
@@ -25,6 +29,11 @@ class ChooseFriendPresenter : MvpPresenter<ChooseFriendView>() {
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
         loadFriends()
+        subscribeForEvents()
+    }
+
+    private fun subscribeForEvents() {
+        eventBus.filter { event -> event.type == EventType.REMIND_CREATED }.subscribe { viewState.onRemindCreated() }
     }
 
     fun loadFriends() {

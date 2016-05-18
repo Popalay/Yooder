@@ -15,5 +15,5 @@ interface MainView : MvpView {
 
     fun openChooseFriendScreen()
 
-    fun onPageSelected(position: Int)
+    fun onPageSelected(position: Int, animate:Boolean)
 }

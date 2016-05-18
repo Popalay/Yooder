@@ -2,17 +2,19 @@ package com.popalay.yooder.mvp.createremind
 
 import android.content.Context
 import android.os.Bundle
+import android.support.v4.content.ContextCompat
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
-import android.view.ViewAnimationUtils
-import android.view.animation.AccelerateInterpolator
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.popalay.yooder.R
 import com.popalay.yooder.common.BaseActivity
+import com.popalay.yooder.extensions.animateRevealShow
 import com.popalay.yooder.models.User
 import kotlinx.android.synthetic.main.activity_input_message.*
-import org.jetbrains.anko.*
+import org.jetbrains.anko.clearTop
+import org.jetbrains.anko.intentFor
+import org.jetbrains.anko.newTask
+import org.jetbrains.anko.onClick
 
 
 class CreateRemindActivity : BaseActivity(), CreateRemindView {
@@ -91,39 +93,23 @@ class CreateRemindActivity : BaseActivity(), CreateRemindView {
         }
 
         priorityGreen.onClick {
-            to.backgroundResource = R.color.green
-            animateRevealShow(to)
+            to.animateRevealShow(ContextCompat.getColor(this, R.color.green))
             priority = 1
         }
 
         priorityYellow.onClick {
-            to.backgroundResource = R.color.yellow
-            animateRevealShow(to)
+            to.animateRevealShow(ContextCompat.getColor(this, R.color.yellow))
             priority = 2
         }
 
         priorityOrange.onClick {
-            to.backgroundResource = R.color.orange
-            animateRevealShow(to)
+            to.animateRevealShow(ContextCompat.getColor(this, R.color.orange))
             priority = 3
         }
 
         priorityRed.onClick {
-            to.backgroundResource = R.color.red
-            animateRevealShow(to)
+            to.animateRevealShow(ContextCompat.getColor(this, R.color.red))
             priority = 4
         }
-    }
-
-    private fun animateRevealShow(viewRoot: View) {
-        val cx = (viewRoot.left + viewRoot.right) / 2
-        val cy = (viewRoot.top + viewRoot.bottom) / 2
-        val finalRadius = Math.max(viewRoot.width, viewRoot.height).toFloat()
-
-        val anim = ViewAnimationUtils.createCircularReveal(viewRoot, cx, cy, 0f, finalRadius)
-        viewRoot.visibility = View.VISIBLE
-        anim.duration = 300
-        anim.interpolator = AccelerateInterpolator()
-        anim.start()
     }
 }

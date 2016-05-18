@@ -51,7 +51,7 @@ class MainPresenter : MvpPresenter<MainView>() {
         viewState.openChooseFriendScreen()
     }
 
-    fun selectPage(position: Int) {
-        viewState.onPageSelected(position)
+    fun selectPage(position: Int, animate:Boolean) {
+        viewState.onPageSelected(position, animate)
     }
 }

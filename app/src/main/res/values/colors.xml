@@ -8,6 +8,7 @@
     <color name="background">#282F3F</color>
     <color name="vk">#597DA3</color>
     <color name="card">#313d54</color>
+    <color name="card_selected">#40506e</color>
 
     <color name="black">#000000</color>
     <color name="jet">#222222</color>

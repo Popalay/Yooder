@@ -11,6 +11,8 @@ import com.popalay.yooder.R
 import com.popalay.yooder.lists.RemindersAdapter
 import com.popalay.yooder.managers.DataManager
 import com.popalay.yooder.managers.SocialManager
+import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration
+import com.yqritc.recyclerviewflexibledivider.VerticalDividerItemDecoration
 import kotlinx.android.synthetic.main.fragment_recycler.*
 import javax.inject.Inject
 
@@ -36,7 +38,20 @@ class FeedFragment : BaseFragment() {
     private fun initList() {
         recycler.layoutManager = LinearLayoutManager(context)
         recycler.setHasFixedSize(true)
+        VerticalDividerItemDecoration.Builder(context).build()
+        recycler.addItemDecoration(HorizontalDividerItemDecoration.Builder(context)
+                .marginResId(R.dimen.divider_margin_left, R.dimen.divider_margin_right)
+                .colorResId(R.color.primaryDark)
+                .build())
         val adapter = RemindersAdapter(dataManager.getMyRemindersQuery(socialManager.getMyId()))
+/*        recycler.setOnItemClickListener { position ->
+            d("click")
+            val isExpanded = position == adapter.mExpandedPosition
+            adapter.mExpandedPosition = if(isExpanded) -1 else position
+            //TransitionManager.beginDelayedTransition(recycler)
+            //adapter.notifyItemInserted(adapter.mExpandedPosition + 1)
+            adapter.notifyDataSetChanged()
+        }*/
         recycler.adapter = adapter
     }
 }

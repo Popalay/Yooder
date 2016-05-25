@@ -1,7 +1,7 @@
 package com.popalay.yooder.lists
 
 import android.support.v7.widget.RecyclerView
-import com.firebase.client.Query
+import com.google.firebase.database.Query
 
 
 abstract class BaseFirebaseAdapter<T>(query: Query, classItem: Class<T>) : FirebaseRecyclerAdapter<RecyclerView.ViewHolder, T>(query, classItem) {

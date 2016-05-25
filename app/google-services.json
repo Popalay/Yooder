@@ -1,56 +1,42 @@
 {
   "project_info": {
-    "project_id": "yooder-661c1",
-    "project_number": "1081807612231",
-    "name": "Yooder"
+    "project_number": "331959713354",
+    "firebase_url": "https://yooder.firebaseio.com",
+    "project_id": "project-229445351091270609",
+    "storage_bucket": "project-229445351091270609.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1081807612231:android:af26cc6504e2b668",
-        "client_id": "android:com.popalay.yooder",
-        "client_type": 1,
+        "mobilesdk_app_id": "1:331959713354:android:af26cc6504e2b668",
         "android_client_info": {
-          "package_name": "com.popalay.yooder",
-          "certificate_hash": []
+          "package_name": "com.popalay.yooder"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1081807612231-of5afrsmmeqgp53qva3bnb9m87u61lgf.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.popalay.yooder",
-            "certificate_hash": "6F528A214DF9040897CBDBA4DD642F7D0D5E7ACC"
-          }
-        },
-        {
-          "client_id": "1081807612231-0vu5eb6n72n3a632llil3avu4eejh03l.apps.googleusercontent.com",
+          "client_id": "331959713354-kfcjute7veufsml3nvsalq7te2lji2sb.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
-      "api_key": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBzuk6KTajcurXNzvdSSOMJIjnJGJPg7ws"
+        }
+      ],
       "services": {
         "analytics_service": {
           "status": 1
-        },
-        "cloud_messaging_service": {
-          "status": 1,
-          "apns_config": []
         },
         "appinvite_service": {
           "status": 1,
           "other_platform_oauth_client": []
         },
-        "google_signin_service": {
-          "status": 2
-        },
         "ads_service": {
-          "status": 1
+          "status": 2
         }
       }
     }
   ],
-  "client_info": [],
-  "ARTIFACT_VERSION": "1"
+  "configuration_version": "1"
 }

@@ -1,6 +1,6 @@
 package com.popalay.yooder.managers
 
-import com.firebase.client.Query
+import com.google.firebase.database.Query
 import com.popalay.yooder.models.Remind
 import com.popalay.yooder.models.User
 import rx.Observable

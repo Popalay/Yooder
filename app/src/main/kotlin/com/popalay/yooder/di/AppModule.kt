@@ -2,8 +2,9 @@ package com.popalay.yooder.di
 
 import android.app.Application
 import android.content.Context
-import com.firebase.client.Firebase
-import com.firebase.client.Logger
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.Logger
 import com.popalay.yooder.managers.DataManager
 import com.popalay.yooder.managers.FirebaseManager
 import com.popalay.yooder.managers.SocialManager
@@ -23,13 +24,11 @@ class AppModule(private val application: Application) {
 
     @Provides
     @Singleton
-    fun provideFirebase(context: Context): Firebase {
-        Firebase.setAndroidContext(context)
-        Firebase.getDefaultConfig().isPersistenceEnabled = true
-        Firebase.getDefaultConfig().setLogLevel(Logger.Level.WARN)
-        val ref = Firebase("https://yooder.firebaseio.com/")
-        ref.keepSynced(true)
-        return ref
+    fun provideFirebase(): DatabaseReference {
+        val database = FirebaseDatabase.getInstance();
+        database.setPersistenceEnabled(true)
+        database.setLogLevel(Logger.Level.DEBUG)
+        return database.reference
     }
 
     @Provides
@@ -38,7 +37,7 @@ class AppModule(private val application: Application) {
 
     @Provides
     @Singleton
-    fun provideDataManager(ref: Firebase): DataManager = FirebaseManager(ref)
+    fun provideDataManager(ref: DatabaseReference): DataManager = FirebaseManager(ref)
 
     @Provides
     @Singleton

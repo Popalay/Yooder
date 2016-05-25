@@ -4,7 +4,7 @@ import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import com.firebase.client.Query
+import com.google.firebase.database.Query
 import com.popalay.yooder.Application
 import com.popalay.yooder.R
 import com.popalay.yooder.extensions.toRelatedDate

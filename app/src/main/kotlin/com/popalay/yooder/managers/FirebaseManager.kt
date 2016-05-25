@@ -1,20 +1,19 @@
 package com.popalay.yooder.managers
 
-import android.util.Log
-import com.firebase.client.Firebase
+import com.google.firebase.database.DatabaseReference
+import com.kelvinapps.rxfirebase.RxFirebaseDatabase
 import com.popalay.yooder.models.Remind
 import com.popalay.yooder.models.User
-import com.soikonomakis.rxfirebase.RxFirebase
 import rx.Observable
 import rx.schedulers.Schedulers
 
-class FirebaseManager(val ref: Firebase) : DataManager {
+class FirebaseManager(val ref: DatabaseReference) : DataManager {
 
     override fun saveFriend(user: User, myId: String) {
-        RxFirebase.getInstance().observeSingleValue(ref.child("users").child(user.id))
+        RxFirebaseDatabase.observeSingleValue(ref.child("users").child(user.id), User::class.java)
                 .subscribeOn(Schedulers.io())
-                .subscribe { snapshot ->
-                    if (!snapshot.exists()) {
+                .subscribe { userRef ->
+                    if (userRef != null) {
                         ref.child("users").child(user.id).setValue(user)
                         ref.child("users").child(user.id).child("friends").child(myId).setValue(true)
                     } else {
@@ -24,29 +23,24 @@ class FirebaseManager(val ref: Firebase) : DataManager {
     }
 
     override fun saveUser(user: User) {
-        RxFirebase.getInstance().observeSingleValue(ref.child("users").child(user.id))
+        RxFirebaseDatabase.observeSingleValue(ref.child("users").child(user.id), User::class.java)
                 .subscribeOn(Schedulers.io())
-                .filter { !it.exists() }
+                .filter { it == null }
                 .subscribe {
                     ref.child("users").child(user.id).setValue(user)
                 }
     }
 
     override fun getFriends(myId: String): Observable<List<User>> {
-        return RxFirebase.getInstance().observeSingleValue(ref.child("users").orderByChild("friends/$myId").equalTo(true))
+        return RxFirebaseDatabase.observeValuesList(ref.child("users").orderByChild("friends/$myId").equalTo(true), User::class.java)
                 .first()
                 .subscribeOn(Schedulers.io())
-                .flatMap { Observable.from(it.children) }
-                .map { it.getValue(User::class.java) }
-                .doOnCompleted { Log.d("ddd", "complete") }
-                .toSortedList { user, user1 -> user.compareTo(user1) }
 
     }
 
     override fun getUser(userId: String): Observable<User> {
-        return RxFirebase.getInstance().observeSingleValue(ref.child("users/$userId"))
+        return RxFirebaseDatabase.observeSingleValue(ref.child("users/$userId"), User::class.java)
                 .subscribeOn(Schedulers.io())
-                .map { it.getValue(User::class.java) }
 
     }
 

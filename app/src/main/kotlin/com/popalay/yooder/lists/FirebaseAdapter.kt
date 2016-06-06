@@ -42,7 +42,7 @@ abstract class FirebaseRecyclerAdapter<ViewHolder : RecyclerView.ViewHolder, T>(
             }
         }
 
-        override fun onChildChanged(dataSnapshot: DataSnapshot, s: String) {
+        override fun onChildChanged(dataSnapshot: DataSnapshot, s: String?) {
             val key = dataSnapshot.key
 
             if (keys.contains(key)) {

@@ -3,7 +3,6 @@ package com.popalay.yooder.lists
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
 import android.transition.AutoTransition
-import android.transition.TransitionManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -47,7 +46,7 @@ class RemindersAdapter(query: Query) : BaseFirebaseAdapter<Remind>(query, Remind
                 mExpandedPosition = if(isExpanded) -1 else position
                 val autoTransition = AutoTransition();
                 autoTransition.duration = 200;
-                TransitionManager.beginDelayedTransition(itemViewList, autoTransition)
+                //TransitionManager.beginDelayedTransition(itemViewList, autoTransition)
                 notifyDataSetChanged()
             }
 

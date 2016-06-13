@@ -4,7 +4,7 @@ apply plugin: 'kotlin-android-extensions'
 
 android {
     compileSdkVersion 23
-    buildToolsVersion '23.0.2'
+    buildToolsVersion '23.0.3'
     defaultConfig {
         applicationId 'com.popalay.yooder'
         minSdkVersion 21
@@ -80,13 +80,10 @@ dependencies {
     compile 'com.arello-mobile:moxy-android:0.4.3'
     kapt 'com.arello-mobile:moxy-compiler:0.4.3'
 
-
-
     compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha1'
 
-    compile 'com.kelvinapps:rxfirebase:0.0.8'
-    compile 'com.google.firebase:firebase-database:9.0.0'
-    compile 'com.google.firebase:firebase-ads:9.0.0'
+    compile 'com.google.firebase:firebase-database:9.0.2'
+    compile 'com.google.firebase:firebase-ads:9.0.2'
 }
 kapt {
     generateStubs = true

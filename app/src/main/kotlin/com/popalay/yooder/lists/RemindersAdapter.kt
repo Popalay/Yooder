@@ -24,7 +24,7 @@ class RemindersAdapter(query: Query) : BaseFirebaseAdapter<Remind>(query, Remind
     @Inject lateinit var dataManager: DataManager
 
     init {
-        Application.graph.inject(this)
+        Application.getGraph().inject(this)
     }
 
     var itemViewList:ViewGroup? = null

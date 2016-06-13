@@ -27,17 +27,18 @@ import org.jetbrains.anko.*
 import kotlin.properties.Delegates
 
 class MainActivity : BaseActivity(), MainView {
+
     @InjectPresenter lateinit var presenter: MainPresenter
+
+    var colors: IntArray by Delegates.notNull<IntArray>()
+    var icons: IntArray by Delegates.notNull<IntArray>()
+    lateinit var animationMenu: GuillotineAnimation
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         initUI()
     }
-
-    var colors: IntArray by Delegates.notNull<IntArray>()
-    var icons: IntArray by Delegates.notNull<IntArray>()
-    lateinit var animationMenu: GuillotineAnimation
 
     private fun initUI() {
         setSupportActionBar(toolbar)
@@ -109,7 +110,7 @@ class MainActivity : BaseActivity(), MainView {
     }
 
     override fun onPageSelected(position: Int, animate: Boolean) {
-        if(guillotine_bg.visibility == View.VISIBLE) {
+        if (guillotine_bg.visibility == View.VISIBLE) {
             animationMenu.close()
         }
         if (animate) {

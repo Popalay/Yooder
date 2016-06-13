@@ -21,12 +21,9 @@ class FeedFragment : BaseFragment() {
     @Inject lateinit var dataManager: DataManager
     @Inject lateinit var socialManager: SocialManager
 
-    init {
-        Application.graph.inject(this)
-    }
-
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater?.inflate(R.layout.fragment_recycler, container, false)
+        Application.getGraph().inject(this)
         return view
     }
 
@@ -44,14 +41,6 @@ class FeedFragment : BaseFragment() {
                 .colorResId(R.color.primaryDark)
                 .build())
         val adapter = RemindersAdapter(dataManager.getMyRemindersQuery(socialManager.getMyId()))
-/*        recycler.setOnItemClickListener { position ->
-            d("click")
-            val isExpanded = position == adapter.mExpandedPosition
-            adapter.mExpandedPosition = if(isExpanded) -1 else position
-            //TransitionManager.beginDelayedTransition(recycler)
-            //adapter.notifyItemInserted(adapter.mExpandedPosition + 1)
-            adapter.notifyDataSetChanged()
-        }*/
         recycler.adapter = adapter
     }
 }

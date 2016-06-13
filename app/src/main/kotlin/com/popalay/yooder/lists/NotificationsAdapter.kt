@@ -19,7 +19,7 @@ class NotificationsAdapter(query: Query) : BaseFirebaseAdapter<Remind>(query, Re
     @Inject lateinit var dataManager: DataManager
 
     init {
-        Application.graph.inject(this)
+        Application.getGraph().inject(this)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {

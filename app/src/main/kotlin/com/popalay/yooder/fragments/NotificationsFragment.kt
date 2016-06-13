@@ -19,12 +19,9 @@ class NotificationsFragment : BaseFragment() {
     @Inject lateinit var dataManager: DataManager
     @Inject lateinit var socialManager: SocialManager
 
-    init {
-        Application.graph.inject(this)
-    }
-
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater?.inflate(R.layout.fragment_recycler, container, false)
+        Application.getGraph().inject(this)
         return view
     }
 

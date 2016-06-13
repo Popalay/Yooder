@@ -22,12 +22,9 @@ class ChooseFriendPresenter : MvpPresenter<ChooseFriendView>() {
     @Inject lateinit var socialManager: SocialManager
     @Inject lateinit var eventBus: PublishSubject<Event>
 
-    init {
-        Application.graph.inject(this)
-    }
-
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
+        Application.getGraph().inject(this)
         loadFriends()
         subscribeForEvents()
     }

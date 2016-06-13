@@ -19,17 +19,10 @@ class AuthPresenter : MvpPresenter<AuthView>() {
     @Inject lateinit var socialManager: SocialManager
     @Inject lateinit var eventBus: PublishSubject<Event>
 
-    init {
-        Application.graph.inject(this)
-    }
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
-        subscribeForEvents()
-    }
-
-    private fun subscribeForEvents() {
-
+        Application.getGraph().inject(this)
     }
 
     fun login(activity: Activity) {

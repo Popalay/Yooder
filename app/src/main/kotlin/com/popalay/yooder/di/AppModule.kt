@@ -26,7 +26,7 @@ class AppModule(private val application: Application) {
     @Singleton
     fun provideFirebase(): DatabaseReference {
         val database = FirebaseDatabase.getInstance();
-        database.setPersistenceEnabled(true)
+        //database.setPersistenceEnabled(true)
         database.setLogLevel(Logger.Level.DEBUG)
         return database.reference
     }
